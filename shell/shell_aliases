@@ -12,6 +12,7 @@ alias oo="open ."
 alias e="$EDITOR"
 alias g="git"
 alias v="vim"
+alias rm='print -P "%F{red}Fuck rm. Use del, or grm%f" >&2'
 alias del="trash"
 alias x+="chmod +x"
 alias -- +x="chmod +x"
