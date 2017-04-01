@@ -228,17 +228,17 @@ main() {
   unset FILES_TO_SYMLINK
 
   # Copy binaries
-  ln -fs $HOME/dotfiles/bin $HOME
+  #ln -fs $HOME/dotfiles/bin $HOME
 
-  declare -a BINARIES=(
-  )
+  #declare -a BINARIES=(
+  #)
 
-  for i in ${BINARIES[@]}; do
-    echo "Changing access permissions for binary script :: ${i##*/}"
-    chmod +rwx $HOME/bin/${i##*/}
-  done
+  #for i in ${BINARIES[@]}; do
+  #  echo "Changing access permissions for binary script :: ${i##*/}"
+  #  chmod +rwx $HOME/bin/${i##*/}
+  #done
 
-  unset BINARIES
+  #unset BINARIES
 
   # copy vim
   mkdir -p $HOME/.vim
