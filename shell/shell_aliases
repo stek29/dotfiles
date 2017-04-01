@@ -70,7 +70,7 @@ export CLICOLOR_FORCE=1
 alias l="ls -lF ${colorflag}"
 
 # ls options: A = include hidden (but not . or ..), F = put `/` after folders, h = byte unit suffixes
-alias ls='ls -AFh ${colorflag} --group-directories-first'
+alias ls='ls -Fh ${colorflag} --group-directories-first'
 
 # List all files colorized in long format, including dot files
 alias la="ls -la ${colorflag}"

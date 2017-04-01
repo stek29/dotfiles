@@ -11,8 +11,10 @@ setopt inc_append_history # Append history as commands are executed
 setopt extended_glob # treat #, ~, and ^ as part of patterns for filename generation
 
 # Keybindings
-bindkey "^[[H" beginning-of-line
-bindkey "^[[F" end-of-line
+bindkey "^[OH" beginning-of-line
+bindkey "^[OF" end-of-line
 bindkey "^[[5~" beginning-of-history
 bindkey "^[[6~" end-of-history
 bindkey "^[[3~" delete-char
+export EDITOR=vim
+export VISUAL="$EDITOR"

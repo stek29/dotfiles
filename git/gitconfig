@@ -182,7 +182,7 @@
         tool = opendiff
 
 [core]
-        editor = nano
+        editor = vim
         abbrev = 12
         attributesfile = ~/.gitattributes
         excludesfile = ~/.gitignore
@@ -213,8 +213,8 @@
 
 # Any GitHub repo with my username should be checked out r/w by default
 # http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
-[url "git@github.com:stek29/"]
-        insteadOf = "git://github.com/stek29/"
+#[url "git@github.com:stek29/"]
+#        insteadOf = "git://github.com/stek29/"
 
 # Rewrites of repo paths
 [url "git@github.com:"]

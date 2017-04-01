@@ -86,28 +86,20 @@ plugins+=history-substring-search
 plugins+=vi-mode 
 plugins+=zsh-syntax-highlighting
 
+source $ZSH/oh-my-zsh.sh
+
 # User configuration
+
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+  . `brew --prefix`/etc/bash_completion
+fi
+
 
 # Load the shell dotfiles
 for file in $HOME/.{shell_exports,shell_aliases,shell_functions,shell_config}; do
   [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
-
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-  . `brew --prefix`/etc/bash_completion
-fi
-
-# Automatically list directory contents on `cd`.
-# auto-ls () {
-#   emulate -L zsh;
-#   # explicit sexy ls'ing as aliases arent honored in here.
-#   hash gls >/dev/null 2>&1 && CLICOLOR_FORCE=1 gls -aFh --color --group-directories-first || ls
-# }
-# chpwd_functions=( auto-ls $chpwd_functions )
-
-
-source $ZSH/oh-my-zsh.sh
 
 # Source local extra (private) settings specific to machine if it exists
 [ -f ~/.zsh.local ] && source ~/.zsh.local
