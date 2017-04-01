@@ -34,11 +34,20 @@ export PATH
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="powerline9k"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 DEFAULT_USER="stek"
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(vi_mode dir dir_writeable vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX="=> "
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+
+POWERLEVEL9K_VI_INSERT_MODE_STRING=""
+POWERLEVEL9K_VI_COMMAND_MODE_STRING="\u2318"
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vi_mode command_execution_time root_indicator background_jobs time)
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -102,4 +111,3 @@ source $ZSH/oh-my-zsh.sh
 
 # Source local extra (private) settings specific to machine if it exists
 [ -f ~/.zsh.local ] && source ~/.zsh.local
-
