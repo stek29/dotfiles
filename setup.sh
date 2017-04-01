@@ -248,6 +248,10 @@ main() {
     git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
   fi
 
+  # nvim
+  ln -s $HOME/.vim $HOME/.config/nvim
+  ln -s vimrc $HOME/.vim/init.vim
+
   echo "Updating Vundle plugins..."
   vim +PluginUpdate +qall >/dev/null 2>&1
   print_result $? "Updated"
