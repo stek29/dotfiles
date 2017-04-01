@@ -12,7 +12,7 @@ alias oo="open ."
 alias e="$EDITOR"
 alias g="git"
 alias v="vim"
-alias rm="trash"
+alias del="trash"
 alias x+="chmod +x"
 alias -- +x="chmod +x"
 
@@ -47,7 +47,7 @@ alias cask='brew cask' # i <3 u cask
 
 # Be nice
 alias htop='sudo htop'
-alias hosts='sudo $EDITOR /etc/hosts'   # yes I occasionally 127.0.0.1 twitter.com ;)
+#alias hosts='sudo $EDITOR /etc/hosts'   # yes I occasionally 127.0.0.1 twitter.com ;)
 
 #
 # Time to upgrade `ls`
@@ -157,8 +157,8 @@ alias gist-file="gist --private --copy"  # gist-file filename.ext -- create priv
 alias dig="dig +nocmd any +multiline +noall +answer"
 
 # View HTTP traffic
-alias sniff="sudo ngrep -W byline -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
-alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+#alias sniff="sudo ngrep -W byline -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+#alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
 # Enhanced WHOIS lookups
 alias whois="whois -h whois-servers.net"
@@ -170,8 +170,8 @@ alias get="curl -O -L"
 alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 
 # Disc utils
-alias diskspace_report="df -P -kHl"
-alias free_diskspace_report="diskspace_report"
+#alias diskspace_report="df -P -kHl"
+#alias free_diskspace_report="diskspace_report"
 
 # File size
 alias fs="stat -f \"%z bytes\""
@@ -199,7 +199,7 @@ alias localrc="if [[ -a ~/.zsh.local ]]; then ${EDITOR} ~/.zsh.local; fi"
 alias brew_update="brew -v update; brew upgrade --force-bottle --cleanup; brew cleanup; brew cask cleanup; brew prune; brew doctor; npm-check -g -u"
 alias update_brew_npm_gem='brew_update; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update --no-rdoc --no-ri'
 #http://stackoverflow.com/a/6109360/5279817
-alias pip_update='pip freeze |sed -ne "s/==.*//p" |xargs pip install -U --' 
+alias pip_update='pip3 freeze |sed -ne "s/==.*//p" |xargs pip3 install -U --' 
 
 # HTTP Requests. One of @janmoesen’s ProTip™s
 #for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
