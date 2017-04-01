@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
 # https://github.com/kaicataldo/dotfiles/blob/master/bin/install.sh
 
@@ -114,7 +114,7 @@ print_result() {
     && print_success "$2" \
     || print_error "$2"
 
-  [ "$3" == "true" ] && [ $1 -ne 0 ] \
+  [[ "$3" == "true" ]] && [ $1 -ne 0 ] \
     && exit
 }
 
@@ -125,7 +125,7 @@ print_success() {
 
 # Warn user this script will overwrite current dotfiles
 while true; do
-  read -p "Warning: this will overwrite your current dotfiles. Continue? [y/n] " yn
+  read "?Warning: this will overwrite your current dotfiles. Continue? [y/n] " yn
   case $yn in
     [Yy]* ) break;;
     [Nn]* ) exit;;
@@ -182,12 +182,30 @@ declare -a FILES_TO_SYMLINK=(
 
 # Move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
 
+echo "Moving any existing dotfiles from ~ to $dir_backup"
 for i in ${FILES_TO_SYMLINK[@]}; do
-  echo "Moving any existing dotfiles from ~ to $dir_backup"
-  mv ~/.${i##*/} ~/dotfiles_old/
+  mv ~/.${i##*/} ~/dotfiles_old/ >/dev/null 2>&1
 done
 
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+function mklink() {
+  local sourceFile=$1
+  local targetFile=$2
+  
+  if [ ! -e "$targetFile" ]; then
+    execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
+  elif [[ "$(readlink "$targetFile")" == "$sourceFile" ]]; then
+    print_success "$targetFile → $sourceFile"
+  else
+    ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
+    if answer_is_yes; then
+      rm -rf "$targetFile"
+      execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
+    else
+      print_error "$targetFile → $sourceFile"
+    fi
+  fi
+}
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
@@ -202,22 +220,10 @@ main() {
 
     sourceFile="$(pwd)/$i"
     targetFile="$HOME/.$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
-
-    if [ ! -e "$targetFile" ]; then
-      execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
-    elif [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
-      print_success "$targetFile → $sourceFile"
-    else
-      ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
-      if answer_is_yes; then
-        rm -rf "$targetFile"
-        execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
-      else
-        print_error "$targetFile → $sourceFile"
-      fi
-    fi
-
+    
+    mklink "$sourceFile" "$targetFile"
   done
+
 
   unset FILES_TO_SYMLINK
 
@@ -225,7 +231,6 @@ main() {
   ln -fs $HOME/dotfiles/bin $HOME
 
   declare -a BINARIES=(
-    'batcharge.py'
   )
 
   for i in ${BINARIES[@]}; do
@@ -237,7 +242,7 @@ main() {
 
   # copy vim
   mkdir -p $HOME/.vim
-  ln -s $HOME/dotfiles/vim/vimrc $HOME/.vim/vimrc
+  mklink $HOME/dotfiles/vim/vimrc $HOME/.vim/vimrc
   if test \! -d $HOME/.vim/bundle/Vundle.vim/.git; then
     echo "Installing Vundle"
     git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
@@ -245,18 +250,18 @@ main() {
 
   echo "Updating Vundle plugins..."
   vim +PluginUpdate +qall >/dev/null 2>&1
-  print_result "Updated"
+  print_result $? "Updated"
 }
 
 install_zsh () {
   # Test to see if zshell is installed.  If it is:
   if [ -f /bin/zsh -o -f /usr/bin/zsh ]; then
     # Install Oh My Zsh if it isn't already present
-    if [[ ! -d $dir/oh-my-zsh/ ]]; then
+    if [[ ! -d $HOME/.oh-my-zsh/ ]]; then
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     fi
     # Set the default shell to zsh if it isn't currently set to zsh
-    if [[ ! $(echo $SHELL) == $(which zsh) ]]; then
+    if [[ ! $(basename $SHELL) == "zsh" ]]; then
       chsh -s $(which zsh)
     fi
   else
@@ -283,12 +288,12 @@ install_zsh () {
 
 # Package managers & packages
 
-. "$DOTFILES_DIR/install/brew.sh"
-. "$DOTFILES_DIR/install/npm.sh"
+#. "$DOTFILES_DIR/install/brew.sh"
+#. "$DOTFILES_DIR/install/npm.sh"
 
-if [ "$(uname)" == "Darwin" ]; then
-    . "$DOTFILES_DIR/install/brew-cask.sh"
-fi
+#if [ "$(uname)" == "Darwin" ]; then
+#    . "$DOTFILES_DIR/install/brew-cask.sh"
+#fi
 
 main
 install_zsh
@@ -298,7 +303,7 @@ install_zsh
 ###############################################################################
 
 # Install Zsh settings
-ln -s ~/dotfiles/zsh/themes/stek.zsh-theme $HOME/.oh-my-zsh/themes
+mklink ~/dotfiles/zsh/themes/stek.zsh-theme $HOME/.oh-my-zsh/custom/themes
 
 
 ###############################################################################
@@ -306,13 +311,13 @@ ln -s ~/dotfiles/zsh/themes/stek.zsh-theme $HOME/.oh-my-zsh/themes
 ###############################################################################
 
 # Only use UTF-8 in Terminal.app
-defaults write com.apple.terminal StringEncodings -array 4
+#defaults write com.apple.terminal StringEncodings -array 4
 
 # Install the Solarized Dark theme for iTerm
-open "${HOME}/dotfiles/iterm/themes/Solarized Dark.itermcolors"
+#open "${HOME}/dotfiles/iterm/themes/Solarized Dark.itermcolors"
 
 # Don’t display the annoying prompt when quitting iTerm
-defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+#defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
 # Reload zsh settings
 source ~/.zshrc

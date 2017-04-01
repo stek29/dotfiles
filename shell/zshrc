@@ -18,7 +18,7 @@ dirs_to_prepend=(
 # Explicitly configured $PATH
 PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-for dir in ${(k)dirs_to_prepend[@]}
+for dir in ${dirs_to_prepend[@]}
 do
   if [ -d ${dir} ]; then
     # If these directories exist, then prepend them to existing PATH
@@ -34,11 +34,11 @@ export PATH
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster-mod"
+ZSH_THEME="powerline9k"
 DEFAULT_USER="stek"
 
-# Z beats cd most of the time
-. ~/z/z.sh
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(vi_mode dir dir_writeable vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs time)
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -72,11 +72,10 @@ plugins=()
 
 plugins+=git
 plugins+=fabric
-plugins+=brew
 plugins+=history
 plugins+=history-substring-search
+plugins+=vi-mode 
 plugins+=zsh-syntax-highlighting
-plugins+=vi-mode #-mod #?!
 
 # User configuration
 
@@ -98,13 +97,9 @@ fi
 # }
 # chpwd_functions=( auto-ls $chpwd_functions )
 
+
 source $ZSH/oh-my-zsh.sh
 
 # Source local extra (private) settings specific to machine if it exists
 [ -f ~/.zsh.local ] && source ~/.zsh.local
 
-# npm tab completion
-. <(npm completion)
-
-# fortune: brew install fortune ponysay
-fortune | ponysay
