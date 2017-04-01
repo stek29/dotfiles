@@ -4,8 +4,15 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 setopt inc_append_history # Append history as commands are executed
-setopt hist_ignore_all_dups # Don't save duplicates
-unsetopt share_history # Disable sharing history between terminals (sessions)
+#setopt hist_ignore_all_dups # Don't save duplicates
+#unsetopt share_history # Disable sharing history between terminals (sessions)
 
 # Expansion and Globbing
 setopt extended_glob # treat #, ~, and ^ as part of patterns for filename generation
+
+# Keybindings
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+bindkey "^[[5~" beginning-of-history
+bindkey "^[[6~" end-of-history
+bindkey "^[[3~" delete-char

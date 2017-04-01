@@ -24,7 +24,7 @@ set expand-tilde off
 set match-hidden-files off
 
 # Show all autocomplete results at once
-set page-completions off
+set page-completions on
 
 # If there are more than 200 possible completions for a word, ask to show them all
 set completion-query-items 200
@@ -74,10 +74,3 @@ set convert-meta off
 # Use Alt/Meta + Delete to delete the preceding word
 "\e[3;3~": kill-word
 
-
-#
-# Misc
-#
-
-# Disable beeping and window flashing
-set bell-style none

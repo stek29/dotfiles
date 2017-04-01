@@ -8,11 +8,8 @@ dirs_to_prepend=(
   "/usr/local/sbin"
   "/usr/local/git/bin"
   "/usr/local/"
-  "/usr/local/mysql/bin"
-  "/sw/bin/"
   "$HOME/dotfiles/bin"
   "$HOME/bin"
-  "$HOME/.rvm/bin"
   "$(brew --prefix ruby)/bin"
   "$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
   "$(brew --prefix)/share/npm/bin" # Add npm-installed package bin
@@ -37,7 +34,8 @@ export PATH
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="nick"
+ZSH_THEME="agnoster-mod"
+DEFAULT_USER="stek"
 
 # Z beats cd most of the time
 . ~/z/z.sh
@@ -69,7 +67,16 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(fabric brew node npm history git-flow vagrant zsh-syntax-highlighting)
+#plugins=(fabric brew node npm history git-flow vagrant zsh-syntax-highlighting)
+plugins=()
+
+plugins+=git
+plugins+=fabric
+plugins+=brew
+plugins+=history
+plugins+=history-substring-search
+plugins+=zsh-syntax-highlighting
+plugins+=vi-mode #-mod #?!
 
 # User configuration
 
