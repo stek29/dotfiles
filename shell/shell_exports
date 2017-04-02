@@ -1,9 +1,9 @@
 # Defaults
 export SHELL=/bin/zsh
 
-# Pagers and Editors == vim
-export MANPAGER="vim -c MANPAGER -"
-export EDITOR=vim
+# Pagers and Editors == nvim
+export MANPAGER="nvim -c MANPAGER -"
+export EDITOR="nvim"
 export VISUAL="$EDITOR"
 
 # Prefer US English and use UTF-8
