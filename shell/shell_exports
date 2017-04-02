@@ -1,12 +1,10 @@
 # Defaults
 export SHELL=/bin/zsh
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nano'
-else
-  export EDITOR='vim'
-fi
+# Pagers and Editors == vim
+export MANPAGER="vim -c MANPAGER -"
+export EDITOR=vim
+export VISUAL="$EDITOR"
 
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
@@ -17,9 +15,6 @@ export LANG="en_US"
 
 # SSH
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Don’t clear the screen after quitting a manual page
-export MANPAGER="less -X"
 
 # Make less the default pager, add some options and enable syntax highlight using source-highlight
 LESSPIPE=`which src-hilite-lesspipe.sh`

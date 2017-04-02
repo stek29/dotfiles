@@ -1,6 +1,8 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
+if has('nvim')
+	set termguicolors
+endif
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -10,10 +12,13 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'tpope/vim-sensible'
+if !has('nvim')
+	Plugin 'tpope/vim-sensible'
+endif
 Plugin 'tpope/vim-sleuth'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'bling/vim-airline'
+Plugin 'lambdalisue/vim-manpager'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
