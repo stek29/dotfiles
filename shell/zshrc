@@ -73,49 +73,18 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # ---------------------------------------------------------
-# Path rewrite, SLOOOOOOOOOOOOOOOOOW, so commented out
+# GNU coreutils
 # ---------------------------------------------------------
-# ------------ needed later ------------
-brew_prefix="$(brew --prefix)"
-
-#3# Directories to be prepended to $PATH
-#3declare -a dirs_to_prepend
-#3dirs_to_prepend=(
-#3  "/usr/bin"
-#3  "/usr/local/sbin"
-#3  "/usr/local/git/bin"
-#3  "/usr/local/"
-#3  "$HOME/dotfiles/bin"
-#3  "$HOME/bin"
-#3  "$(brew --prefix ruby)/bin"
-#3  "$(brew --prefix coreutils)/libexec/gnubin" # Add brew-installed GNU core utilities bin
-#3  "$(brew --prefix)/share/npm/bin" # Add npm-installed package bin
-#3)
-#3
-#3# Explicitly configured $PATH
-#3PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-#3
-#3for dir in ${dirs_to_prepend[@]}
-#3do
-#3  if [ -d ${dir} ]; then
-#3    # If these directories exist, then prepend them to existing PATH
-#3    PATH="${dir}:$PATH"
-#3  fi
-#3done
-#3
-#3unset dirs_to_prepend
-#3
-#3export PATH
-#3
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 
 # ---------------------------------------------------------
 # Completions
 # ---------------------------------------------------------
-
 # http://stackoverflow.com/a/27853970/5279817
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
+brew_prefix="$(brew --prefix)"
 if [ -f "$brew_prefix/etc/bash_completion" ]; then
   . "$brew_prefix/etc/bash_completion"
 fi
