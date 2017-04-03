@@ -43,7 +43,7 @@ less_options=(
   --dumb
 );
 export LESS="${less_options[*]}"
-export PAGER='less'
+export PAGER='less -X'
 
 # Load nvm
 #export NVM_DIR="$HOME/.nvm"
