@@ -1,0 +1,7 @@
+# pipdeptree | grep -E '^\w+' | grep -v wheel | sed 's/==.*$//'
+mitmproxy
+neovim
+pipdeptree
+Pygments
+PyPDF2
+youtube-dl
