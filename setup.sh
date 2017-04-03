@@ -1,32 +1,24 @@
 #!/usr/bin/env zsh
-
-# https://github.com/kaicataldo/dotfiles/blob/master/bin/install.sh
-
 # This symlinks all the dotfiles to ~/
-# It also symlinks ~/bin for easy updating
-
 # This is safe to run multiple times and will prompt you about anything unclear
 
-
-#
 # Utils
-#
-
 answer_is_yes() {
   [[ "$REPLY" =~ ^[Yy]$ ]] \
     && return 0 \
     || return 1
 }
 
-ask() {
-  print_question "$1"
-  read
-}
-
 ask_for_confirmation() {
-  print_question "$1 (y/n) "
-  read -n 1
-  printf "\n"
+  while true; do
+    read "?$(print_question "$1")" yn
+    case $yn in
+      [Yy]* ) return 0;;
+      [Nn]* ) return 1;;
+      * ) echo "Please answer yes or no.";;
+    esac
+  done
+  unset yn
 }
 
 ask_for_sudo() {
@@ -51,12 +43,8 @@ cmd_exists() {
 }
 
 execute() {
-  $1 &> /dev/null
+  eval $1
   print_result $? "${2:-$1}"
-}
-
-get_answer() {
-  printf "$REPLY"
 }
 
 get_os() {
@@ -124,15 +112,9 @@ print_success() {
 }
 
 # Warn user this script will overwrite current dotfiles
-while true; do
-  read "?Warning: this will overwrite your current dotfiles. Continue? [y/n] " yn
-  case $yn in
-    [Yy]* ) break;;
-    [Nn]* ) exit;;
-    * ) echo "Please answer yes or no.";;
-  esac
-done
-
+if ! ask_for_confirmation "?Warning: this will overwrite your current dotfiles. Continue? [y/n] "; then
+  exit 1
+fi
 # Get the dotfiles directory's absolute path
 SCRIPT_DIR="$(cd "$(dirname "$0")"; pwd -P)"
 DOTFILES_DIR="$(dirname "$SCRIPT_DIR")"
@@ -197,9 +179,8 @@ function mklink() {
   elif [[ "$(readlink "$targetFile")" == "$sourceFile" ]]; then
     print_success "$targetFile → $sourceFile"
   else
-    ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
-    if answer_is_yes; then
-      rm -rf "$targetFile"
+    if ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"; then
+      rm -r "$targetFile"
       execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
     else
       print_error "$targetFile → $sourceFile"
@@ -239,7 +220,9 @@ main() {
   #done
 
   #unset BINARIES
+}
 
+vim_setup () {
   # copy vim
   mkdir -p $HOME/.vim
   mklink $HOME/dotfiles/vim/vimrc $HOME/.vim/vimrc
@@ -249,11 +232,11 @@ main() {
   fi
 
   # nvim
-  ln -s $HOME/.vim $HOME/.config/nvim
-  ln -s vimrc $HOME/.vim/init.vim
+  ln -fs $HOME/.vim $HOME/.config/nvim
+  ln -fs vimrc $HOME/.vim/init.vim
 
   echo "Updating Vundle plugins..."
-  vim +PluginUpdate +qall >/dev/null 2>&1
+  nvim +PluginUpdate +qall >/dev/null 2>&1
   print_result $? "Updated"
 }
 
@@ -290,25 +273,23 @@ install_zsh () {
   fi
 }
 
-# Package managers & packages
-
-#. "$DOTFILES_DIR/install/brew.sh"
-#. "$DOTFILES_DIR/install/npm.sh"
-
-#if [ "$(uname)" == "Darwin" ]; then
-#    . "$DOTFILES_DIR/install/brew-cask.sh"
-#fi
+###################################
+print_info "Fetching submodules"
+git submodule update --quiet --init --recursive
+print_result $? "Submodules fetched"
 
 main
+vim_setup
 install_zsh
-
+###################################
+#
 ###############################################################################
 # Zsh                                                                         #
 ###############################################################################
 
 # Install Zsh settings
-mklink ~/dotfiles/zsh/themes/stek.zsh-theme $HOME/.oh-my-zsh/custom/themes
-
+mklink ~/dotfiles/zsh-custom/themes $HOME/.oh-my-zsh/custom/themes
+mklink ~/dotfiles/zsh-custom/plugins $HOME/.oh-my-zsh/custom/plugins
 
 ###############################################################################
 # Terminal & iTerm 2                                                          #
