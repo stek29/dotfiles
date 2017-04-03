@@ -62,6 +62,24 @@ print_success() {
   printf "\e[0;32m  [✔] $1\e[0m\n"
 }
 
+mklink () {
+  local sourceFile=$1
+  local targetFile=$2
+  
+  if [ ! -e "$targetFile" ]; then
+    execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
+  elif [[ "$(readlink "$targetFile")" == "$sourceFile" ]]; then
+    print_success "$targetFile → $sourceFile"
+  else
+    if ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"; then
+      rm -r "$targetFile"
+      execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
+    else
+      print_error "$targetFile → $sourceFile"
+    fi
+  fi
+}
+
 # Warn user this script will overwrite current dotfiles
 if ! ask_for_confirmation "?Warning: this will overwrite your current dotfiles. Continue? [y/n] "; then
   exit 1
@@ -89,11 +107,13 @@ echo -n "Changing to the $dir directory..."
 cd $dir
 echo "done"
 
-#
+# Fetch submodules
+print_info "Fetching submodules"
+git submodule update --quiet --init --recursive
+print_result $? "Submodules fetched"
+
+
 # Actual symlink stuff
-#
-
-
 declare -a FILES_TO_SYMLINK=(
   'shell/shell_aliases'
   'shell/shell_config'
@@ -111,149 +131,40 @@ declare -a FILES_TO_SYMLINK=(
   'git/gitignore'
 )
 
-# FILES_TO_SYMLINK="$FILES_TO_SYMLINK .vim bin" # add in vim and the binaries
-
 # Move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
-
 echo "Moving any existing dotfiles from ~ to $dir_backup"
 for i in ${FILES_TO_SYMLINK[@]}; do
   mv ~/.${i##*/} ~/dotfiles_old/ >/dev/null 2>&1
 done
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-function mklink() {
-  local sourceFile=$1
-  local targetFile=$2
+for i in ${FILES_TO_SYMLINK[@]}; do
+  sourceFile="$(pwd)/$i"
+  targetFile="$HOME/.$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
   
-  if [ ! -e "$targetFile" ]; then
-    execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
-  elif [[ "$(readlink "$targetFile")" == "$sourceFile" ]]; then
-    print_success "$targetFile → $sourceFile"
-  else
-    if ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"; then
-      rm -r "$targetFile"
-      execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
-    else
-      print_error "$targetFile → $sourceFile"
-    fi
-  fi
-}
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  mklink "$sourceFile" "$targetFile"
+done
 
-main() {
+unset FILES_TO_SYMLINK
 
-  local i=''
-  local sourceFile=''
-  local targetFile=''
+# Vim
+mkdir -p $HOME/.vim
+mklink $HOME/dotfiles/vim/vimrc $HOME/.vim/vimrc
+if test \! -d $HOME/.vim/bundle/Vundle.vim/.git; then
+  echo "Installing Vundle"
+  git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+fi
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# nvim
+ln -fs $HOME/.vim $HOME/.config/nvim
+ln -fs vimrc $HOME/.vim/init.vim
 
-  for i in ${FILES_TO_SYMLINK[@]}; do
+echo "Updating Vundle plugins..."
+nvim +PluginUpdate +qall >/dev/null 2>&1
+print_result $? "Updated"
 
-    sourceFile="$(pwd)/$i"
-    targetFile="$HOME/.$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
-    
-    mklink "$sourceFile" "$targetFile"
-  done
-
-
-  unset FILES_TO_SYMLINK
-
-  # Copy binaries
-  #ln -fs $HOME/dotfiles/bin $HOME
-
-  #declare -a BINARIES=(
-  #)
-
-  #for i in ${BINARIES[@]}; do
-  #  echo "Changing access permissions for binary script :: ${i##*/}"
-  #  chmod +rwx $HOME/bin/${i##*/}
-  #done
-
-  #unset BINARIES
-}
-
-vim_setup () {
-  # copy vim
-  mkdir -p $HOME/.vim
-  mklink $HOME/dotfiles/vim/vimrc $HOME/.vim/vimrc
-  if test \! -d $HOME/.vim/bundle/Vundle.vim/.git; then
-    echo "Installing Vundle"
-    git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
-  fi
-
-  # nvim
-  ln -fs $HOME/.vim $HOME/.config/nvim
-  ln -fs vimrc $HOME/.vim/init.vim
-
-  echo "Updating Vundle plugins..."
-  nvim +PluginUpdate +qall >/dev/null 2>&1
-  print_result $? "Updated"
-}
-
-install_zsh () {
-  # Test to see if zshell is installed.  If it is:
-  if [ -f /bin/zsh -o -f /usr/bin/zsh ]; then
-    # Install Oh My Zsh if it isn't already present
-    if [[ ! -d $HOME/.oh-my-zsh/ ]]; then
-      sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    fi
-    # Set the default shell to zsh if it isn't currently set to zsh
-    if [[ ! $(basename $SHELL) == "zsh" ]]; then
-      chsh -s $(which zsh)
-    fi
-  else
-    # If zsh isn't installed, get the platform of the current machine
-    platform=$(uname);
-    # If the platform is Linux, try an apt-get to install zsh and then recurse
-    if [[ $platform == 'Linux' ]]; then
-      if [[ -f /etc/redhat-release ]]; then
-        sudo yum install zsh
-        install_zsh
-      fi
-      if [[ -f /etc/debian_version ]]; then
-        sudo apt-get install zsh
-        install_zsh
-      fi
-    # If the platform is OS X, tell the user to install zsh :)
-    elif [[ $platform == 'Darwin' ]]; then
-      echo "We'll install zsh, then re-run this script!"
-      brew install zsh
-      exit
-    fi
-  fi
-}
-
-###################################
-print_info "Fetching submodules"
-git submodule update --quiet --init --recursive
-print_result $? "Submodules fetched"
-
-main
-vim_setup
-install_zsh
-###################################
-#
-###############################################################################
-# Zsh                                                                         #
-###############################################################################
-
-# Install Zsh settings
+# Oh My Zsh Customs
 mklink ~/dotfiles/zsh-custom/themes $HOME/.oh-my-zsh/custom/themes
 mklink ~/dotfiles/zsh-custom/plugins $HOME/.oh-my-zsh/custom/plugins
-
-###############################################################################
-# Terminal & iTerm 2                                                          #
-###############################################################################
-
-# Only use UTF-8 in Terminal.app
-#defaults write com.apple.terminal StringEncodings -array 4
-
-# Install the Solarized Dark theme for iTerm
-#open "${HOME}/dotfiles/iterm/themes/Solarized Dark.itermcolors"
-
-# Don’t display the annoying prompt when quitting iTerm
-#defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
 # Reload zsh settings
 source ~/.zshrc
