@@ -23,3 +23,11 @@ Plugin 'lambdalisue/vim-manpager'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" http://stackoverflow.com/a/17362994/5279817
+" size of a hard tabstop
+set tabstop=2
+" always uses spaces instead of tab characters
+set expandtab
+" size of an "indent"
+set shiftwidth=2
