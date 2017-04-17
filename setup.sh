@@ -172,8 +172,14 @@ nvim +PluginUpdate +qall >/dev/null 2>&1
 print_result $? "Updated"
 
 # Oh My Zsh Customs
-mklink ~/dotfiles/zsh-custom/themes $HOME/.oh-my-zsh/custom/themes
-mklink ~/dotfiles/zsh-custom/plugins $HOME/.oh-my-zsh/custom/plugins
+for f in ~/dotfiles/zsh-custom/*; do
+  mklink "$f" "$HOME/.oh-my-zsh/custom/$(basename "$f")"
+done
+
+# Oh My Zsh Theme
+if [ "$(uname)" = "Darwin" ]; then
+  mklink $HOME/.oh-my-zsh/custom/powerlevel9k.theme $HOME/.oh-my-zsh/custom/zsh.theme
+fi
 
 # Reload zsh settings
 source ~/.zshrc
