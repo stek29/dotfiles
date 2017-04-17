@@ -60,8 +60,6 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(
   git
-#  history
-#  fabric
   history-substring-search
   vi-mode
   zsh-syntax-highlighting
@@ -105,7 +103,8 @@ for file in $HOME/.shell_{exports,aliases,functions,config}; do
   [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
+
 # ---------------------------------------------------------
 # Local zshrc
 # ---------------------------------------------------------
-[ -f ~/.zsh.local ] && source ~/.zsh.local
+[ -f ~/.zsh.local ] && source ~/.zsh.local || true

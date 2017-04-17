@@ -1,8 +1,8 @@
 # Defaults
 export SHELL=/bin/zsh
 
-# Pagers and Editors == nvim
-export MANPAGER="nvim -c MANPAGER -"
+# Pagers and Editors == n?vim
+export MANPAGER="$(whereis vim) -c MANPAGER -"
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
 
