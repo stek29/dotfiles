@@ -113,6 +113,7 @@ git submodule update --quiet --init --recursive
 print_result $? "Submodules fetched"
 
 # Brew stuff
+if [ "$(uname)" = "Darwin"]; then
 if ! type "brew" >/dev/null; then
   print_error "No homebrew found"
   exit 1
@@ -121,9 +122,10 @@ brew tap Homebrew/bundle
 print_info "Reinstalling packages"
 execute "brew bundle --file=packages/Brewfile" "Homebrew & Cask & Mac AppStore"
 execute "pip3 install -U -r packages/requirements3.txt" "pip3"
+fi
 
 # Actual symlink stuff
-declare -a FILES_TO_SYMLINK=(
+FILES_TO_SYMLINK=(
   'shell/shell_aliases'
   'shell/shell_config'
   'shell/shell_exports'
@@ -168,7 +170,7 @@ ln -fs $HOME/.vim $HOME/.config/nvim
 ln -fs vimrc $HOME/.vim/init.vim
 
 echo "Updating Vundle plugins..."
-nvim +PluginUpdate +qall >/dev/null 2>&1
+vim +PluginUpdate +qall >/dev/null 2>&1
 print_result $? "Updated"
 
 # Oh My Zsh Customs
