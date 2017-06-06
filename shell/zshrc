@@ -98,3 +98,6 @@ unset file;
 # Local zshrc
 # ---------------------------------------------------------
 [ -f ~/.zsh.local ] && source ~/.zsh.local || true
+
+# added by travis gem
+[ -f /Users/stek/.travis/travis.sh ] && source /Users/stek/.travis/travis.sh
