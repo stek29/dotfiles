@@ -15,6 +15,7 @@ Plugin 'VundleVim/Vundle.vim'
 if !has('nvim')
 	Plugin 'tpope/vim-sensible'
 endif
+
 Plugin 'tpope/vim-sleuth'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'bling/vim-airline'
@@ -32,3 +33,30 @@ set tabstop=2
 set expandtab
 " size of an "indent"
 set shiftwidth=2
+
+" based on https://github.com/derElektrobesen/dotfiles/blob/master/.vimrc
+set list
+set listchars=tab:>-,trail:-
+
+set number
+set relativenumber
+
+" Break on words, not letters (when displaying)
+set linebreak
+" as much as possible of the last line in a window will be displayed (not @)
+set display=lastline
+
+" indent	allow backspacing over autoindent
+"	eol	allow backspacing over line breaks (join lines)
+set backspace=eol,indent
+
+" Tell vim to remember certain things when we exit
+"  '50  :  marks will be remembered for up to 10 previously edited files
+"  "100 :  will save up to 100 lines for each register
+"  :20  :  up to 20 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
+
+if has('nvim')
+	set viminfo='50,\"100,:20,%,n~/.vim/nviminfo
+endif
