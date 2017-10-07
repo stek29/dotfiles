@@ -149,3 +149,45 @@ code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCodeInsiders" --args $*;
 shellswitch () {
   chsh -s $(brew --prefix)/bin/$1
 }
+
+update_pkgs () {
+  case "$1" in
+    pip)
+      pip list --outdated --format=freeze|\
+        grep -v '^\-e' | cut -d = -f 1  |\
+        xargs -n1 pip install -U --
+      ;;
+    pip2)
+      pip2 list --outdated --format=freeze|\
+        grep -v '^\-e' | cut -d = -f 1  |\
+        xargs -n1 pip2 install -U --
+      ;;
+    pip3)
+      pip3 list --outdated --format=freeze|\
+        grep -v '^\-e' | cut -d = -f 1  |\
+        xargs -n1 pip3 install -U --
+      ;;
+    brew)
+      brew -v update
+      brew upgrade
+      ;;
+    cask)
+      brew cask upgrade
+      ;;
+    pacman)
+      pacman -Syu
+      ;;
+    npm)
+      npm install -g npm
+      npm update -g
+      ;;
+    gem)
+      sudo gem update --system
+      sudo gem update --no-rdoc --no-ri
+      ;;
+    *)
+      echo "UNKNOWN OPTION: $1"
+      return 1
+      ;;
+  esac
+}
