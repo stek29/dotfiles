@@ -46,10 +46,6 @@ set linebreak
 " as much as possible of the last line in a window will be displayed (not @)
 set display=lastline
 
-" indent	allow backspacing over autoindent
-"	eol	allow backspacing over line breaks (join lines)
-set backspace=eol,indent
-
 " Tell vim to remember certain things when we exit
 "  '50  :  marks will be remembered for up to 10 previously edited files
 "  "100 :  will save up to 100 lines for each register
