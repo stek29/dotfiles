@@ -56,3 +56,5 @@ set display=lastline
 if has('nvim')
 	set viminfo='50,\"100,:20,%,n~/.vim/nviminfo
 endif
+
+set textwidth=72
