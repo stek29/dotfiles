@@ -174,10 +174,25 @@ echo "Updating Vundle plugins..."
 vim +PluginUpdate +qall >/dev/null 2>&1
 print_result $? "Updated"
 
+
+# recursive mklink
+recursive_link () {
+  for f in $1/*; do
+    fname="$(basename "$f")"
+    if [ \! -L "$2/$fname" -a -d "$2/$fname" -a -d "$f" ]; then
+      # dir to dir
+      recursive_link "$f" "$2/$fname"
+    else
+      mklink "$f" "$ZSH_CUSTOM/$(basename "$f")"
+    fi
+  done
+}
+
 # Oh My Zsh Customs
-for f in ~/dotfiles/zsh-custom/*; do
-  mklink "$f" "$HOME/.oh-my-zsh/custom/$(basename "$f")"
-done
+if [ -z "$ZSH_CUSTOM" ]; then
+  ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+fi
+recursive_link ~/dotfiles/zsh-custom "$ZSH_CUSTOM"
 
 # Oh My Zsh Theme
 if [ "$(uname)" = "Darwin" ]; then
