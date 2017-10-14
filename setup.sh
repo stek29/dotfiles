@@ -213,4 +213,9 @@ fi
 # Reload zsh settings
 source ~/.zshrc
 
+# would fail if dir is not empty
+if rmdir $dir_backup >/dev/null 2>&1; then
+  print_info "Removed $dir_backup since no files were backed up"
+fi
+
 print_info "Done. You can check $PWD/setup.log for logs."
