@@ -194,7 +194,7 @@ recursive_link () {
       # dir to dir
       recursive_link "$f" "$2/$fname"
     else
-      mklink "$f" "$ZSH_CUSTOM/$(basename "$f")"
+      mklink "$f" "$2/$fname"
     fi
   done
 }
