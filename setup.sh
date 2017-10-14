@@ -28,6 +28,13 @@ ask_for_sudo() {
   done &> /dev/null &
 }
 
+print_log() {
+  printf "$1"
+  printf "$1" |\
+    sed "s/\x1B\[\([0-9]\{1,2\}\(;[0-9]\{1,2\}\)\?\)\?[mGK]//g"\
+    >>setup.log
+}
+
 execute() {
   eval $1 >>setup.log 2>&1
   print_result $? "${2:-$1}"
@@ -35,17 +42,17 @@ execute() {
 
 print_error() {
   # Print output in red
-  printf "\e[0;31m  [✖] $1 $2\e[0m\n"
+  print_log "\e[0;31m  [✖] $1 $2\e[0m\n"
 }
 
 print_info() {
   # Print output in purple
-  printf "\n\e[0;35m $1\e[0m\n\n"
+  print_log "\e[0;35m  $1\e[0m\n"
 }
 
 print_question() {
   # Print output in yellow
-  printf "\e[0;33m  [?] $1\e[0m"
+  print_log "\e[0;33m  [?] $1\e[0m"
 }
 
 print_result() {
@@ -59,19 +66,27 @@ print_result() {
 
 print_success() {
   # Print output in green
-  printf "\e[0;32m  [✔] $1\e[0m\n"
+  print_log "\e[0;32m  [✔] $1\e[0m\n"
 }
 
 mklink () {
-  local sourceFile=$1
-  local targetFile=$2
-  
+  local sourceFile="$1"
+  local targetFile="$2"
+  local backupToDir="$3"
+
+  if [ -d "$backupToDir" ]; then
+    backupTo="$backupToDir/$(basename "$targetFile")"
+  fi
+
   if [ ! -e "$targetFile" ]; then
     execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
   elif [[ "$(readlink "$targetFile")" == "$sourceFile" ]]; then
     print_success "$targetFile → $sourceFile"
   else
-    if ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"; then
+    if [ ! -z "$backupTo" ]; then
+      print_success "Backup'd $targetFile → $backupTo"
+      execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
+    elif ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"; then
       rm -r "$targetFile"
       execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
     else
@@ -79,6 +94,9 @@ mklink () {
     fi
   fi
 }
+
+# empty logfile
+: >'setup.log'
 
 # Warn user this script will overwrite current dotfiles
 if ! ask_for_confirmation "?Warning: this will overwrite your current dotfiles. Continue? [y/n] "; then
@@ -98,14 +116,11 @@ DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DOTFILES_DIR
 
 # Create dotfiles_old in homedir
-echo -n "Creating $dir_backup for backup of any existing dotfiles in ~..."
+print_info "Creating $dir_backup for backup of existing dotfiles in ~"
 mkdir -p $dir_backup
-echo "done"
 
 # Change to the dotfiles directory
-echo -n "Changing to the $dir directory..."
 cd $dir
-echo "done"
 
 # Fetch submodules
 print_info "Fetching submodules"
@@ -113,16 +128,16 @@ git submodule update --quiet --init --recursive
 print_result $? "Submodules fetched"
 
 # Brew stuff
-if [ "$(uname)" = "Darwin" ]; then
-if ! type "brew" >/dev/null; then
-  print_error "No homebrew found"
-  exit 1
-fi
-brew tap Homebrew/bundle
-if ask_for_confirmation "?Install packages?"; then
-  execute "brew bundle --file=packages/Brewfile" "Homebrew & Cask & Mac AppStore"
+if ask_for_confirmation "?Install pkgs (pip3, brew, cask, mas)?"; then
+  if [ "$(uname)" = "Darwin" ]; then
+    if ! type "brew" >/dev/null; then
+      print_error "No homebrew found, skipping"
+    else
+      execute "brew tap Homebrew/bundle"
+      execute "brew bundle --file=packages/Brewfile" "Homebrew & Cask & Mac AppStore"
+    fi
+  fi
   execute "pip3 install -U -r packages/requirements3.txt" "pip3"
-fi
 fi
 
 # Actual symlink stuff
@@ -143,17 +158,13 @@ FILES_TO_SYMLINK=(
   'git/gitignore'
 )
 
-# Move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
-echo "Moving any existing dotfiles from ~ to $dir_backup"
+# Move any existing dotfiles in homedir to dotfiles_old directory, then
+# create symlinks from the homedir to any files in the ~/dotfiles
+# directory specified in $files
 for i in ${FILES_TO_SYMLINK[@]}; do
-  mv ~/.${i##*/} ~/dotfiles_old/ >/dev/null 2>&1
-done
-
-for i in ${FILES_TO_SYMLINK[@]}; do
-  sourceFile="$(pwd)/$i"
+  sourceFile="$PWD/$i"
   targetFile="$HOME/.$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
-  
-  mklink "$sourceFile" "$targetFile"
+  mklink "$sourceFile" "$targetFile" "$dir_backup"
 done
 
 unset FILES_TO_SYMLINK
@@ -170,7 +181,7 @@ fi
 ln -fs $HOME/.vim $HOME/.config/nvim
 ln -fs vimrc $HOME/.vim/init.vim
 
-echo "Updating Vundle plugins..."
+print_info "Updating Vundle plugins..."
 vim +PluginUpdate +qall >/dev/null 2>&1
 print_result $? "Updated"
 
