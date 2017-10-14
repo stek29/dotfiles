@@ -29,7 +29,7 @@ ask_for_sudo() {
 }
 
 execute() {
-  eval $1 >>setup.log 2>>&1
+  eval $1 >>setup.log 2>&1
   print_result $? "${2:-$1}"
 }
 
