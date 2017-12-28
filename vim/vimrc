@@ -39,10 +39,10 @@ set list
 set listchars=tab:>-,trail:-
 
 set number
-set relativenumber
+" set relativenumber
 
 " Break on words, not letters (when displaying)
-set linebreak
+" set linebreak
 " as much as possible of the last line in a window will be displayed (not @)
 set display=lastline
 
