@@ -1,7 +1,15 @@
-# pipdeptree | grep -E '^\w+' | grep -v wheel | sed 's/==.*$//'
+Telethon
+capstone
+construct
+fpdf
+frida
+html2text
+img2pdf
+ipython
+lxml
 mitmproxy
 neovim
+packaging
 pipdeptree
-Pygments
-PyPDF2
+virtualenvwrapper
 youtube-dl
