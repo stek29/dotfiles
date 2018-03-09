@@ -56,10 +56,11 @@ alias myip6="ifconfig | grep 'inet6 ' | awk '{print \$2}'"
 
 # Git aliases
 # More Git tips http://firstaidgit.io/
-alias gss="git status -s"
+alias gss="git status -sb"
 alias gp="git push origin HEAD"
 alias gpt="git push origin HEAD && git push --tags"
-alias gl='git log'
+alias gl='git hist'
+alias glog='git log'
 alias gs='git status'
 alias gd='git diff'
 alias gm='git commit -m'
@@ -68,7 +69,6 @@ alias gc='git checkout'
 alias gpu='git pull origin HEAD --prune'
 alias gf='git reflog' # allows you to see every step you have made with git allowing you to retract and reinstate your steps
 alias gap='git add -p' # step through each change, or hunk
-alias gst='git stash' # stash git changes and put them into your list
 alias gcln='git clean -xfd' # remove untracked files
 
 # Undo a `git push`
