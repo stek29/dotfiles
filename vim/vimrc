@@ -62,3 +62,11 @@ set textwidth=72
 set smartcase
 set ignorecase
 
+function! s:MANPAGERIFY() abort
+	set nonumber
+
+	MANPAGER
+endfunction
+
+command! -nargs=0 MANPAGERIFY call s:MANPAGERIFY()
+

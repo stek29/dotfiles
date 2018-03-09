@@ -2,7 +2,7 @@
 export SHELL=/bin/zsh
 
 # Pagers and Editors == n?vim
-export MANPAGER="$(whereis vim) -c MANPAGER -"
+export MANPAGER="$(command -v nvim) -c MANPAGERIFY -"
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
 
