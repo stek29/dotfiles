@@ -10,12 +10,6 @@ export VISUAL="$EDITOR"
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# SSH
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
 # Make less the default pager, add some options and enable syntax highlight using source-highlight
 LESSPIPE=`which src-hilite-lesspipe.sh`
 [ -n "$LESSPIPE" ] && export LESSOPEN="| ${LESSPIPE} %s"
@@ -45,16 +39,6 @@ less_options=(
 export LESS="${less_options[*]}"
 export PAGER='less -X'
 
-# Load nvm
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-# here's LS_COLORS
-# github.com/trapd00r/LS_COLORS
-# command -v gdircolors >/dev/null 2>&1 || alias gdircolors="dircolors"
-# eval "$(gdircolors -b ~/.dircolors)"
-
 # ~/bin
 export PATH="$HOME/bin:$PATH"
+
