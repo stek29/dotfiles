@@ -10,6 +10,7 @@ alias sudo="sudo "
 alias g="git"
 alias vim="nvim"
 #alias rm='print -P "%F{red}Fuck rm. Use del, or grm%f" >&2'
+alias o="open"
 
 # npm -g i trash-cli
 alias del="trash"
