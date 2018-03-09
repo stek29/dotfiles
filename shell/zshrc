@@ -102,3 +102,7 @@ unset file;
 # added by travis gem
 [ -f "$HOME/.travis/travis.sh" ] && source "$HOME/.travis/travis.sh" || true
 
+# Only correct commands, not arguments
+unsetopt correct_all
+setopt correct
+
