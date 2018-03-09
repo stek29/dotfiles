@@ -2,7 +2,7 @@
 
 # Fancier diff
 function fdiff() {
-  git diff --color --no-index $@ | diff-so-fancy
+  git diff --color --no-index $@
 }
 
 # Create a new directory and enter it

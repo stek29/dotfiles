@@ -125,7 +125,7 @@
         tool = opendiff
 
 [core]
-        editor = vim
+        editor = nvim
         abbrev = 12
         attributesfile = ~/.gitattributes
         excludesfile = ~/.gitignore
