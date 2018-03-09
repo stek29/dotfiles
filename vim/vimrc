@@ -59,8 +59,17 @@ endif
 
 set textwidth=72
 
+" Smart search
 set smartcase
 set ignorecase
+
+" Underline current line
+set cursorline
+hi clear CursorLine
+hi CursorLine gui=underline cterm=underline
+
+" Dont wrap long lines pls
+set formatoptions=cqj
 
 function! s:MANPAGERIFY() abort
 	set nonumber
