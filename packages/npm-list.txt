@@ -1,0 +1,4 @@
+diff-so-fancy
+gulp
+npm
+trash-cli
