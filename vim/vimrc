@@ -58,3 +58,7 @@ if has('nvim')
 endif
 
 set textwidth=72
+
+set smartcase
+set ignorecase
+
