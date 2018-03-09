@@ -10,11 +10,6 @@ function md() {
   mkdir -p "$@" && cd "$@"
 }
 
-# find shorthand
-function f() {
-  find . -name "$1" 2>&1 | grep -v 'Permission denied'
-}
-
 # List all files, long format, colorized, permissions in octal
 function la() {
    ls -l  "$@" | awk '
@@ -28,39 +23,9 @@ function la() {
     }'
 }
 
-# cd into whatever is the forefront Finder window.
-cdf () {  # short for cdfinder
-  cd "`osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)'`"
-}
-
-
-# Start an HTTP server from a directory, optionally specifying the port
-function server() {
-  local port="${1:-8000}"
-  open "http://localhost:${port}/"
-  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
-  # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
-  python2 -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
-}
-
-
 # Copy w/ progress
 cp_p () {
   rsync -WavP --human-readable --progress $1 $2
-}
-
-# qfind - used to quickly find files that contain a string in a directory
-qfind () {
-  find . -exec grep -l -s $1 {} \;
-  return 0
-}
-
-# get gzipped size
-function gz() {
-  echo "orig size    (bytes): "
-  cat "$1" | wc -c
-  echo "gzipped size (bytes): "
-  gzip -c "$1" | wc -c
 }
 
 function localip() {
@@ -141,31 +106,12 @@ webmify () {
   ffmpeg -i "$1" -vcodec libvpx -acodec libvorbis -isync -copyts -aq 80 -threads 3 -qmax 30 -y "$2" "$1.webm"
 }
 
-# visual studio code. a la `subl`
-code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCodeInsiders" --args $*; }
-
-# `shellswitch [bash |zsh]`
-#   Must be in /etc/shells
-shellswitch () {
-  chsh -s $(brew --prefix)/bin/$1
-}
-
 update_pkgs () {
   case "$1" in
-    pip)
-      pip list --outdated --format=freeze|\
+    pip*)
+      $1 list --outdated --format=freeze|\
         grep -v '^\-e' | cut -d = -f 1  |\
         xargs -n1 pip install -U --
-      ;;
-    pip2)
-      pip2 list --outdated --format=freeze|\
-        grep -v '^\-e' | cut -d = -f 1  |\
-        xargs -n1 pip2 install -U --
-      ;;
-    pip3)
-      pip3 list --outdated --format=freeze|\
-        grep -v '^\-e' | cut -d = -f 1  |\
-        xargs -n1 pip3 install -U --
       ;;
     brew)
       brew -v update
@@ -187,6 +133,7 @@ update_pkgs () {
       ;;
     *)
       echo "UNKNOWN OPTION: $1"
+      echo "gem/npm/pip*/brew/cask/pacman expected"
       return 1
       ;;
   esac
