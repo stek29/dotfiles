@@ -56,3 +56,6 @@ as the `git` user credentials.
 
 The code is available under the [MIT license](LICENSE).
 
+## Credits
+This repo was based on https://github.com/nicksp/dotfiles
+
