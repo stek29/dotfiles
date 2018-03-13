@@ -127,6 +127,16 @@ print_info "Fetching submodules"
 git submodule update --quiet --init --recursive
 print_result $? "Submodules fetched"
 
+# Oh My Zsh install
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  if ask_for_confirmation "?Install oh-my-zsh?"; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh); exit"
+  else
+    print_error "Oh My Zsh is not installed!"
+    exit 1
+  fi
+fi
+
 # Brew stuff
 if ask_for_confirmation "?Install pkgs (pip3, brew, cask, mas)?"; then
   if [ "$(uname)" = "Darwin" ]; then
@@ -147,11 +157,8 @@ FILES_TO_SYMLINK=(
   'shell/shell_exports'
   'shell/shell_functions'
   'shell/zshrc'
-  'shell/ackrc'
   'shell/curlrc'
-  'shell/gemrc'
   'shell/inputrc'
-  'shell/screenrc'
 
   'git/gitattributes'
   'git/gitconfig'
@@ -177,6 +184,8 @@ if test \! -d $HOME/.vim/bundle/Vundle.vim/.git; then
   git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 fi
 
+mkdir -p $HOME/.config
+
 # nvim
 ln -fs $HOME/.vim $HOME/.config/nvim
 ln -fs vimrc $HOME/.vim/init.vim
@@ -198,7 +207,6 @@ recursive_link () {
     fi
   done
 }
-
 # Oh My Zsh Customs
 if [ -z "$ZSH_CUSTOM" ]; then
   ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
