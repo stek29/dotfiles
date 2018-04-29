@@ -96,9 +96,10 @@ webmify () {
 update_pkgs () {
   case "$1" in
     pip*)
+      $1 install --upgrade pip
       $1 list --outdated --format=freeze|\
         grep -v '^\-e' | cut -d = -f 1  |\
-        xargs -n1 pip install -U --
+        xargs -n1 $1 install -U --
       ;;
     brew)
       brew -v update
