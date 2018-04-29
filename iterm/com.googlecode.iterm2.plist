@@ -666,7 +666,7 @@
 	<key>DrawOutlineAroundCursor</key>
 	<false/>
 	<key>EnableProxyIcon</key>
-	<false/>
+	<true/>
 	<key>HideActivityIndicator</key>
 	<false/>
 	<key>HideMenuBarInFullscreen</key>
@@ -789,11 +789,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 126 606 469 0 0 1920 1178 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>627 682 796 473 0 0 1920 1178 </string>
+	<string>626 728 770 429 0 0 1920 1178 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>155 594 592 584 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>8 446 1904 603 0 0 1920 1200 </string>
+	<string>500 300 892 603 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>494 346 1418 602 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1460,7 +1460,7 @@
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
-	<integer>1</integer>
+	<integer>0</integer>
 	<key>NoSyncPermissionToShowTip</key>
 	<false/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
@@ -1519,7 +1519,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-03-13T00:46:03Z</date>
+	<date>2018-04-09T02:46:07Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>ShowBookmarkName</key>
