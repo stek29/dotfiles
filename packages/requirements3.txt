@@ -3,13 +3,15 @@ capstone
 construct
 fpdf
 frida
-html2text
 img2pdf
 ipython
 lxml
+meson
 mitmproxy
 neovim
 packaging
 pipdeptree
+pycrypto
+requests
 virtualenvwrapper
 youtube-dl
