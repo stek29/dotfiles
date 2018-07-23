@@ -106,3 +106,6 @@ unset file;
 unsetopt correct_all
 setopt correct
 
+# If glob patttern doesnt match anything, pass it as raw string
+unsetopt nomatch
+
