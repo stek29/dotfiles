@@ -6,8 +6,6 @@ frida
 img2pdf
 ipython
 lxml
-meson
-mitmproxy
 neovim
 packaging
 pipdeptree
