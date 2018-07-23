@@ -21,6 +21,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'bling/vim-airline'
 Plugin 'lambdalisue/vim-manpager'
 Plugin 'fidian/hexmode'
+Plugin 'vimwiki/vimwiki'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -79,3 +80,6 @@ endfunction
 
 command! -nargs=0 MANPAGERIFY call s:MANPAGERIFY()
 
+map <F2> :setlocal spell! spelllang=en_us,ru_ru<CR>
+
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.mkdn'}]
