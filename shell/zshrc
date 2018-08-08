@@ -109,3 +109,16 @@ setopt correct
 # If glob patttern doesnt match anything, pass it as raw string
 unsetopt nomatch
 
+# Disable logout on ctrl d
+setopt IGNORE_EOF
+
+function extended_logout() {
+  echo; echo -n 'logout [y/N]: '
+  if read -q; then
+    exit
+  else
+    zle send-break
+  fi
+}
+zle -N extended-logout extended_logout
+bindkey '^d' extended-logout
