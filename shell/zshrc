@@ -64,6 +64,10 @@ export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 # Completions
 # ---------------------------------------------------------
 # http://stackoverflow.com/a/27853970/5279817
+
+# Disabled since most completions have zsh versions already
+
+: <<EOF
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
@@ -80,6 +84,7 @@ if [ -d "$brew_prefix/etc/bash_completion.d" ]; then
   unset comp
 fi
 unset brew_prefix
+EOF
 
 fi
 # -------------------------------------------------------------------
