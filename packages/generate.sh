@@ -2,6 +2,9 @@
 
 # brew, cask, mas
 brew bundle dump --force
+grep 'tap ' Brewfile|sort > Brewfile.new
+grep -v '^tap ' Brewfile|sort >>Brewfile.new
+mv Brewfile.new Brewfile
 
 # pip
 pipdeptree 2>/dev/null |\
