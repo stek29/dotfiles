@@ -1,4 +1,4 @@
 diff-so-fancy
-gulp
 npm
+resume-cli
 trash-cli
