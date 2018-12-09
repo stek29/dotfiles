@@ -1,18 +1,17 @@
 # Defaults
-export SHELL=/bin/zsh
+[ -n "$SHELL" ] && export SHELL="$(command -v nvim)"
 
 # Pagers and Editors == n?vim
 export MANPAGER="$(command -v nvim) -c MANPAGERIFY -"
-export EDITOR="nvim"
+export EDITOR="vim"
+command -v nvim >/dev/null && export EDITOR="nvim"
 export VISUAL="$EDITOR"
 
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
 
-# Make less the default pager, add some options and enable syntax highlight using source-highlight
-LESSPIPE=`which src-hilite-lesspipe.sh`
-[ -n "$LESSPIPE" ] && export LESSOPEN="| ${LESSPIPE} %s"
+# Make less the default pager, add some options
 less_options=(
   # If the entire text fits on one screen, just show it and quit. (Be more
   # like "cat" and less like "more".)
