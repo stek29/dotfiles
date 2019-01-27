@@ -150,3 +150,7 @@ function nullhost() {
   # progress meter for POST/PUT is only shown when output is redirected
   curl -F"file=@$1" 'https://0x0.st' | cat
 }
+
+function nullshort() {
+  curl -sS -F"shorten=$1" 'https://0x0.st'
+}
