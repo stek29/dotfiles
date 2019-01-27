@@ -1,5 +1,5 @@
 # Defaults
-[ -n "$SHELL" ] && export SHELL="$(command -v nvim)"
+[ -n "$SHELL" ] && export SHELL="$(command -v zsh)"
 
 # Pagers and Editors == n?vim
 export MANPAGER="$(command -v nvim) -c MANPAGERIFY -"
