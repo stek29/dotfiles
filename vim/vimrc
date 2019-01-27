@@ -83,3 +83,7 @@ command! -nargs=0 MANPAGERIFY call s:MANPAGERIFY()
 map <F2> :setlocal spell! spelllang=en_us,ru_ru<CR>
 
 let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.mkdn'}]
+
+let g:ruby_default_path = ['/usr/local/opt/ruby/bin/ruby']
+
+set background=light
