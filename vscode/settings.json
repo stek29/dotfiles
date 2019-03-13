@@ -1,0 +1,24 @@
+{
+    "workbench.colorTheme": "Material Monokai High Contrast",
+    "window.zoomLevel": 0,
+    "editor.fontSize": 18,
+    "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "spellright.language": [
+        "en",
+        "ru"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext",
+        "go"
+    ],
+    "spellright.recheckOnSave": true,
+    "spellright.ignoreRegExpsByClass": {
+        "go": [
+            "/^import\\s+\\\".+\\\"$/m",
+            "/^import\\s+\\([^]*?\\)$/gm"
+        ]
+    }
+}

@@ -204,6 +204,22 @@ if [ "$(uname)" = "Darwin" ]; then
   mklink $HOME/.oh-my-zsh/custom/powerlevel9k.theme $HOME/.oh-my-zsh/custom/zsh.theme
 fi
 
+# VSCode
+if command -v code >/dev/null && [ "$(uname)" = "Darwin" ]; then
+  VSC_USER_DATA="$HOME/Library/Application Support/Code/User"
+
+  print_info "(macOS) VSCode found"
+  # print_info "Backing up user data to $dir_backup/vscode"
+  mkdir -p "$dir_backup/vscode"
+  # cp -R "$VSC_USER_DATA"/*.json "$VSC_USER_DATA"/snippets "$dir_backup/vscode"
+
+  # print_info "Removing old user data"
+  # rm -rf "$VSC_USER_DATA"/*.json "$VSC_USER_DATA"/snippets
+
+  print_info "Linking user data"
+  recursive_link "$DOTFILES_DIR/vscode" "$VSC_USER_DATA" "$dir_backup/vscode"
+fi
+
 # Reload zsh settings
 source ~/.zshrc
 
