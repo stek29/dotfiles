@@ -15,19 +15,6 @@ ask_for_confirmation() {
   unset yn
 }
 
-ask_for_sudo() {
-  # Ask for the administrator password upfront
-  sudo -v
-
-  # Update existing `sudo` time stamp until this script has finished
-  # https://gist.github.com/cowboy/3118588
-  while true; do
-    sudo -n true
-    sleep 60
-    kill -0 "$$" || exit
-  done &> /dev/null &
-}
-
 print_log() {
   printf "$1"
   printf "$1" |\
@@ -36,6 +23,7 @@ print_log() {
 }
 
 execute() {
+  echo "$ EVAL $1" >>setup.log
   eval $1 >>setup.log 2>&1
   print_result $? "${2:-$1}"
 }
@@ -52,7 +40,7 @@ print_info() {
 
 print_question() {
   # Print output in yellow
-  print_log "\e[0;33m  [?] $1\e[0m"
+  print_log "\e[0;33m  [?] $1 [y/n] \e[0m"
 }
 
 print_result() {
@@ -79,16 +67,16 @@ mklink () {
   fi
 
   if [ ! -e "$targetFile" ]; then
-    execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
+    execute "ln -fs \"$sourceFile\" \"$targetFile\"" "$targetFile → $sourceFile"
   elif [[ "$(readlink "$targetFile")" == "$sourceFile" ]]; then
     print_success "$targetFile → $sourceFile"
   else
     if [ ! -z "$backupTo" ]; then
-      print_success "Backup'd $targetFile → $backupTo"
-      execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
+      execute "mv \"$targetFile\" \"$backupTo\"" "Backup'd $targetFile → $backupTo"
+      execute "ln -fs \"$targetFile\" \"$sourceFile\"" "$targetFile → $sourceFile"
     elif ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"; then
       rm -r "$targetFile"
-      execute "ln -fs $sourceFile $targetFile" "$targetFile → $sourceFile"
+      execute "ln -fs \"$sourceFile\" \"$targetFile\"" "$targetFile → $sourceFile"
     else
       print_error "$targetFile → $sourceFile"
     fi
@@ -99,37 +87,31 @@ mklink () {
 : >'setup.log'
 
 # Warn user this script will overwrite current dotfiles
-if ! ask_for_confirmation "?Warning: this will overwrite your current dotfiles. Continue? [y/n] "; then
+if ! ask_for_confirmation "Warning: this will overwrite your current dotfiles. Continue?"; then
   exit 1
 fi
-# Get the dotfiles directory's absolute path
-SCRIPT_DIR="$(cd "$(dirname "$0")"; pwd -P)"
-DOTFILES_DIR="$(dirname "$SCRIPT_DIR")"
-
-
-dir=~/dotfiles                        # dotfiles directory
-dir_backup=~/dotfiles_old             # old dotfiles backup directory
 
 # Get current dir (so run this script from anywhere)
-
-DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DOTFILES_DIR="$(cd "$(dirname "$0")"; pwd -P)"
 export DOTFILES_DIR
+
+dir_backup=~/dotfiles_old             # old dotfiles backup directory
 
 # Create dotfiles_old in homedir
 print_info "Creating $dir_backup for backup of existing dotfiles in ~"
 mkdir -p $dir_backup
 
 # Change to the dotfiles directory
-cd $dir
+cd "$DOTFILES_DIR"
+print_info "Workdir: $PWD"
 
 # Fetch submodules
 print_info "Fetching submodules"
-git submodule update --quiet --init --recursive
-print_result $? "Submodules fetched"
+execute "git submodule update --quiet --init --recursive"
 
 # Oh My Zsh install
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  if ask_for_confirmation "?Install oh-my-zsh?"; then
+  if ask_for_confirmation "Install oh-my-zsh?"; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh); exit"
   else
     print_error "Oh My Zsh is not installed!"
@@ -138,7 +120,7 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
 fi
 
 # Brew stuff
-if ask_for_confirmation "?Install pkgs (pip3, brew, cask, mas)?"; then
+if ask_for_confirmation "Install pkgs (pip3, brew, cask, mas)?"; then
   if [ "$(uname)" = "Darwin" ]; then
     if ! type "brew" >/dev/null; then
       print_error "No homebrew found, skipping"
@@ -178,10 +160,15 @@ unset FILES_TO_SYMLINK
 
 # Vim
 mkdir -p $HOME/.vim
-mklink $HOME/dotfiles/vim/vimrc $HOME/.vim/vimrc
+mklink $DOTFILES_DIR/vim/vimrc $HOME/.vim/vimrc
+
+HAVE_VUNDLE=1
 if test \! -d $HOME/.vim/bundle/Vundle.vim/.git; then
-  echo "Installing Vundle"
-  git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
+  if ask_for_confirmation "Install Vundle? (vimrc might break without it)"; then
+    execute "git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim"
+  else
+    HAVE_VUNDLE=0
+  fi
 fi
 
 mkdir -p $HOME/.config
@@ -190,10 +177,9 @@ mkdir -p $HOME/.config
 ln -fs $HOME/.vim $HOME/.config/nvim
 ln -fs vimrc $HOME/.vim/init.vim
 
-print_info "Updating Vundle plugins..."
-vim +PluginUpdate +qall >/dev/null 2>&1
-print_result $? "Updated"
-
+if [ $HAVE_VUNDLE = 1 ] && ask_for_confirmation "Update Vundle plugins?"; then
+  execute "vim +PluginUpdate +qall >/dev/null 2>&1"
+fi
 
 # recursive mklink
 recursive_link () {
@@ -201,9 +187,9 @@ recursive_link () {
     fname="$(basename "$f")"
     if [ \! -L "$2/$fname" -a -d "$2/$fname" -a -d "$f" ]; then
       # dir to dir
-      recursive_link "$f" "$2/$fname"
+      recursive_link "$f" "$2/$fname" "$3"
     else
-      mklink "$f" "$2/$fname"
+      mklink "$f" "$2/$fname" "$3"
     fi
   done
 }
@@ -211,7 +197,7 @@ recursive_link () {
 if [ -z "$ZSH_CUSTOM" ]; then
   ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 fi
-recursive_link ~/dotfiles/zsh-custom "$ZSH_CUSTOM"
+recursive_link "$DOTFILES_DIR/zsh-custom" "$ZSH_CUSTOM"
 
 # Oh My Zsh Theme
 if [ "$(uname)" = "Darwin" ]; then
