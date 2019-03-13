@@ -22,3 +22,5 @@ npm -g ls --depth=0 --parseable |\
   done \
     > npm-list.txt
 
+# vscode
+code --list-extensions > vscode-list.txt

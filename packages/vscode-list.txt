@@ -1,0 +1,10 @@
+ban.spellright
+coolbear.systemd-unit-file
+James-Yu.latex-workshop
+karigari.chat
+ms-vscode.Go
+ms-vsliveshare.vsliveshare
+ms-vsliveshare.vsliveshare-audio
+ms-vsliveshare.vsliveshare-pack
+PeterJausovec.vscode-docker
+repeale.material-monokai

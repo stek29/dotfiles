@@ -19,12 +19,12 @@ print_log() {
   printf "$1"
   printf "$1" |\
     sed "s/\x1B\[\([0-9]\{1,2\}\(;[0-9]\{1,2\}\)\?\)\?[mGK]//g"\
-    >>setup.log
+    >>"$LOGFILE"
 }
 
 execute() {
-  echo "$ EVAL $1" >>setup.log
-  eval $1 >>setup.log 2>&1
+  echo "$ EVAL $1" >>"$LOGFILE"
+  ( eval $1 ) >>"$LOGFILE" 2>&1
   print_result $? "${2:-$1}"
 }
 
@@ -72,6 +72,7 @@ mklink () {
     print_success "$targetFile → $sourceFile"
   else
     if [ ! -z "$backupTo" ]; then
+      mkdir -p "$backupToDir"
       execute "mv \"$targetFile\" \"$backupTo\"" "Backup'd $targetFile → $backupTo"
       execute "ln -fs \"$targetFile\" \"$sourceFile\"" "$targetFile → $sourceFile"
     elif ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"; then
@@ -83,27 +84,29 @@ mklink () {
   fi
 }
 
+# Get current dir (so run this script from anywhere)
+DOTFILES_DIR="$(cd "$(dirname "$0")"; pwd -P)"
+export DOTFILES_DIR
+
+# Change to the dotfiles directory
+cd "$DOTFILES_DIR"
+print_info "Workdir: $PWD"
+
+LOGFILE="$PWD/"$LOGFILE""
 # empty logfile
-: >'setup.log'
+: >"$LOGFILE"
 
 # Warn user this script will overwrite current dotfiles
 if ! ask_for_confirmation "Warning: this will overwrite your current dotfiles. Continue?"; then
   exit 1
 fi
 
-# Get current dir (so run this script from anywhere)
-DOTFILES_DIR="$(cd "$(dirname "$0")"; pwd -P)"
-export DOTFILES_DIR
-
-dir_backup=~/dotfiles_old             # old dotfiles backup directory
+BACKUP_DIR=~/dotfiles_old             # old dotfiles backup directory
 
 # Create dotfiles_old in homedir
-print_info "Creating $dir_backup for backup of existing dotfiles in ~"
-mkdir -p $dir_backup
+print_info "Creating $BACKUP_DIR for backup of existing dotfiles in ~"
+mkdir -p "$BACKUP_DIR"
 
-# Change to the dotfiles directory
-cd "$DOTFILES_DIR"
-print_info "Workdir: $PWD"
 
 # Fetch submodules
 print_info "Fetching submodules"
@@ -120,18 +123,28 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
 fi
 
 # Brew stuff
-if ask_for_confirmation "Install pkgs (pip3, brew, cask, mas)?"; then
+if ask_for_confirmation "Install pkgs (brew/cask/mas, pip3, npm, vscode)?"; then
+  pushd packages
   if [ "$(uname)" = "Darwin" ]; then
     if ! type "brew" >/dev/null; then
       print_error "No homebrew found, skipping"
     else
       execute "brew tap Homebrew/bundle"
-      execute "brew bundle --file=packages/Brewfile" "Homebrew & Cask & Mac AppStore"
+      execute "brew bundle --file=Brewfile" "Homebrew & Cask & Mac AppStore"
     fi
   fi
-  execute "pip3 install -U -r packages/requirements3.txt" "pip3"
-fi
 
+  execute "pip3 install -U -r requirements3.txt" "pip3"
+  
+  execute "<npm-list.txt xargs npm i -g" "npm"
+  
+  if command -v code >/dev/null; then
+    print_info "Installing VSCode extensions, this might take a while..."
+    execute "<vscode-list.txt xargs -n1 code --install-extension" "vscode"
+  fi
+  popd
+fi
+exit 0
 # Actual symlink stuff
 FILES_TO_SYMLINK=(
   'shell/shell_aliases'
@@ -153,14 +166,14 @@ FILES_TO_SYMLINK=(
 for i in ${FILES_TO_SYMLINK[@]}; do
   sourceFile="$PWD/$i"
   targetFile="$HOME/.$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
-  mklink "$sourceFile" "$targetFile" "$dir_backup"
+  mklink "$sourceFile" "$targetFile" "$BACKUP_DIR"
 done
 
 unset FILES_TO_SYMLINK
 
 # Vim
 mkdir -p $HOME/.vim
-mklink $DOTFILES_DIR/vim/vimrc $HOME/.vim/vimrc
+mklink "$DOTFILES_DIR/vim/vimrc" "$HOME/.vim/vimrc"
 
 HAVE_VUNDLE=1
 if test \! -d $HOME/.vim/bundle/Vundle.vim/.git; then
@@ -187,7 +200,7 @@ recursive_link () {
     fname="$(basename "$f")"
     if [ \! -L "$2/$fname" -a -d "$2/$fname" -a -d "$f" ]; then
       # dir to dir
-      recursive_link "$f" "$2/$fname" "$3"
+      recursive_link "$f" "$2/$fname" "$3/$fname"
     else
       mklink "$f" "$2/$fname" "$3"
     fi
@@ -201,7 +214,7 @@ recursive_link "$DOTFILES_DIR/zsh-custom" "$ZSH_CUSTOM"
 
 # Oh My Zsh Theme
 if [ "$(uname)" = "Darwin" ]; then
-  mklink $HOME/.oh-my-zsh/custom/powerlevel9k.theme $HOME/.oh-my-zsh/custom/zsh.theme
+  mklink "$HOME/.oh-my-zsh/custom/powerlevel9k.theme" "$HOME/.oh-my-zsh/custom/zsh.theme"
 fi
 
 # VSCode
@@ -209,23 +222,17 @@ if command -v code >/dev/null && [ "$(uname)" = "Darwin" ]; then
   VSC_USER_DATA="$HOME/Library/Application Support/Code/User"
 
   print_info "(macOS) VSCode found"
-  # print_info "Backing up user data to $dir_backup/vscode"
-  mkdir -p "$dir_backup/vscode"
-  # cp -R "$VSC_USER_DATA"/*.json "$VSC_USER_DATA"/snippets "$dir_backup/vscode"
-
-  # print_info "Removing old user data"
-  # rm -rf "$VSC_USER_DATA"/*.json "$VSC_USER_DATA"/snippets
 
   print_info "Linking user data"
-  recursive_link "$DOTFILES_DIR/vscode" "$VSC_USER_DATA" "$dir_backup/vscode"
+  recursive_link "$DOTFILES_DIR/vscode" "$VSC_USER_DATA" "$BACKUP_DIR/vscode"
 fi
 
 # Reload zsh settings
 source ~/.zshrc
 
 # would fail if dir is not empty
-if rmdir $dir_backup >/dev/null 2>&1; then
-  print_info "Removed $dir_backup since no files were backed up"
+if rmdir "$BACKUP_DIR" >/dev/null 2>&1; then
+  print_info "Removed $BACKUP_DIR since no files were backed up"
 fi
 
-print_info "Done. You can check $PWD/setup.log for logs."
+print_info "Done. You can check $LOGFILE for logs."
