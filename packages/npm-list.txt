@@ -1,4 +1,5 @@
 diff-so-fancy
+mdpdf
 npm
 resume-cli
 trash-cli

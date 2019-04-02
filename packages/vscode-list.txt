@@ -1,10 +1,17 @@
 ban.spellright
+bltg-team.masm
 coolbear.systemd-unit-file
+eamodio.gitlens
+foxundermoon.shell-format
 James-Yu.latex-workshop
 karigari.chat
+mikestead.dotenv
+ms-vscode.cpptools
 ms-vscode.Go
 ms-vsliveshare.vsliveshare
 ms-vsliveshare.vsliveshare-audio
 ms-vsliveshare.vsliveshare-pack
+oderwat.indent-rainbow
 PeterJausovec.vscode-docker
+redhat.vscode-yaml
 repeale.material-monokai
