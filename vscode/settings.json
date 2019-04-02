@@ -11,8 +11,7 @@
     "spellright.documentTypes": [
         "markdown",
         "latex",
-        "plaintext",
-        "go"
+        "plaintext"
     ],
     "spellright.recheckOnSave": true,
     "spellright.ignoreRegExpsByClass": {
@@ -20,5 +19,8 @@
             "/^import\\s+\\\".+\\\"$/m",
             "/^import\\s+\\([^]*?\\)$/gm"
         ]
-    }
+    },
+    "workbench.settings.editor": "json",
+    "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}",
+    "editor.rulers": [72, 80, 120]
 }
