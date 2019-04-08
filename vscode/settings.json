@@ -1,9 +1,15 @@
 {
     "workbench.colorTheme": "Material Monokai High Contrast",
+    "workbench.settings.editor": "json",
     "window.zoomLevel": 0,
     "editor.fontSize": 18,
     "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontLigatures": true,
+    "editor.rulers": [
+        72,
+        80,
+        120
+    ],
     "spellright.language": [
         "en",
         "ru"
@@ -20,7 +26,6 @@
             "/^import\\s+\\([^]*?\\)$/gm"
         ]
     },
-    "workbench.settings.editor": "json",
     "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}",
-    "editor.rulers": [72, 80, 120]
+    "go.inferGopath": true
 }
