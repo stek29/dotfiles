@@ -144,7 +144,7 @@ if ask_for_confirmation "Install pkgs (brew/cask/mas, pip3, npm, vscode)?"; then
   fi
   popd
 fi
-exit 0
+
 # Actual symlink stuff
 FILES_TO_SYMLINK=(
   'shell/shell_aliases'
