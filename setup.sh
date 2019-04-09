@@ -90,11 +90,12 @@ export DOTFILES_DIR
 
 # Change to the dotfiles directory
 cd "$DOTFILES_DIR"
-print_info "Workdir: $PWD"
 
-LOGFILE="$PWD/"$LOGFILE""
+LOGFILE="$PWD/setup.log"
 # empty logfile
 : >"$LOGFILE"
+
+print_info "Workdir: $PWD"
 
 # Warn user this script will overwrite current dotfiles
 if ! ask_for_confirmation "Warning: this will overwrite your current dotfiles. Continue?"; then
