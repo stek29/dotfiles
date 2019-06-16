@@ -6,7 +6,7 @@ function fdiff() {
 }
 
 # Create a new directory and enter it
-function md() {
+function mdcd() {
   mkdir -p "$@" && cd "$@"
 }
 
