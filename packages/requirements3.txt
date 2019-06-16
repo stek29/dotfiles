@@ -1,5 +1,7 @@
 PyPDF2
+PySocks
 Telethon
+autopep8
 beautifulsoup4
 capstone
 construct
@@ -13,6 +15,7 @@ packaging
 pipdeptree
 pyTelegramBotAPI
 pycrypto
+pylint
 scapy
 uncompyle6
 virtualenvwrapper

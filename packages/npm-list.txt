@@ -1,5 +1,8 @@
 diff-so-fancy
+eslint
 mdpdf
+messer
 npm
 resume-cli
 trash-cli
+vue-cli
