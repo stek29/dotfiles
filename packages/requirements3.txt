@@ -1,5 +1,6 @@
 PyPDF2
 PySocks
+PyYAML
 Telethon
 autopep8
 beautifulsoup4

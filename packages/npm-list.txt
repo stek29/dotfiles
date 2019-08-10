@@ -1,5 +1,6 @@
 diff-so-fancy
 eslint
+gitignore-to-dockerignore
 mdpdf
 messer
 npm

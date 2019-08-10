@@ -12,6 +12,7 @@ johnpapa.vscode-peacock
 karigari.chat
 mattn.Lisp
 mikestead.dotenv
+ms-azuretools.vscode-docker
 ms-python.python
 ms-vscode.cpptools
 ms-vscode.Go
@@ -20,8 +21,8 @@ ms-vsliveshare.vsliveshare-audio
 ms-vsliveshare.vsliveshare-pack
 octref.vetur
 oderwat.indent-rainbow
-PeterJausovec.vscode-docker
 redhat.vscode-yaml
 repeale.material-monokai
 twxs.cmake
 vector-of-bool.cmake-tools
+vscoss.vscode-ansible
