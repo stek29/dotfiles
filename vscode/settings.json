@@ -100,8 +100,5 @@
             "name": "Vue Green",
             "value": "#42b883"
         }
-    ],
-    "[dockerfile]": {
-        "editor.defaultFormatter": "PeterJausovec.vscode-docker"
-    }
+    ]
 }
