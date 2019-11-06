@@ -2131,6 +2131,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>currentTab.currentSession.termid</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>currentTab.currentSession.terminalIconName</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -2204,6 +2212,14 @@
 				<true/>
 				<key>name</key>
 				<string>currentTab.currentSession.commandLine</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>number</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -2553,10 +2569,14 @@
 	<true/>
 	<key>SoundForEsc</key>
 	<false/>
+	<key>StatusBarPosition</key>
+	<integer>1</integer>
 	<key>StretchTabsToFillBar</key>
 	<true/>
 	<key>TabStyle</key>
 	<integer>3</integer>
+	<key>TabStyleWithAutomaticOption</key>
+	<integer>6</integer>
 	<key>TabViewType</key>
 	<integer>0</integer>
 	<key>UKCrashReporterLastCrashReportDate</key>
@@ -2572,6 +2592,6 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.3.0beta16</string>
+	<string>3.3.3beta2</string>
 </dict>
 </plist>
