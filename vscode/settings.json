@@ -100,5 +100,9 @@
             "name": "Vue Green",
             "value": "#42b883"
         }
-    ]
+    ],
+    "liveServer.settings.donotShowInfoMsg": true,
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    }
 }
