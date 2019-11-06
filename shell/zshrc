@@ -67,7 +67,6 @@ export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 
 # Disabled since most completions have zsh versions already
 
-: <<EOF
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
@@ -77,14 +76,13 @@ if [ -f "$brew_prefix/etc/bash_completion" ]; then
 fi
 if [ -d "$brew_prefix/etc/bash_completion.d" ]; then
   for comp in "$brew_prefix/etc/bash_completion.d/"*; do
-    if ! [[ "$comp" =~ "(git|brew)" ]]; then
+    if ! [[ "$comp" =~ "(git|brew|docker|golangci-lint)" ]]; then
       . "$comp"
     fi
   done
   unset comp
 fi
 unset brew_prefix
-EOF
 
 fi
 # -------------------------------------------------------------------
