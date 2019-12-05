@@ -76,7 +76,7 @@ if [ -f "$brew_prefix/etc/bash_completion" ]; then
 fi
 if [ -d "$brew_prefix/etc/bash_completion.d" ]; then
   for comp in "$brew_prefix/etc/bash_completion.d/"*; do
-    if ! [[ "$comp" =~ "(git|brew|docker|golangci-lint)" ]]; then
+    if ! [[ "$comp" =~ "(git|brew|docker|golangci-lint|kubectl|helm)" ]]; then
       . "$comp"
     fi
   done
