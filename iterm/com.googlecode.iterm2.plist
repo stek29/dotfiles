@@ -907,15 +907,15 @@
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>759 786 400 129 0 0 1920 1177 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>650 589 620 392 0 0 1920 1178 </string>
+	<string>650 588 620 392 0 0 1920 1177 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 126 606 469 0 0 1920 1178 </string>
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>624 555 796 486 0 0 1920 1178 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
-	<string>155 594 592 584 0 0 1920 1178 </string>
+	<string>155 593 592 584 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>9 250 1783 647 0 0 1920 1178 </string>
+	<string>1000 550 890 624 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>494 346 1418 602 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1740,6 +1740,33 @@
 			<string>/Users/stek</string>
 		</dict>
 	</array>
+	<key>NoSyncAllAppVersions</key>
+	<array>
+		<string>3.3.5beta2</string>
+		<string>3.3.0beta11</string>
+		<string>3.3.0beta9</string>
+		<string>3.3.2beta1</string>
+		<string>3.3.0beta12</string>
+		<string>3.3.0beta13</string>
+		<string>3.3.7beta1</string>
+		<string>3.3.1beta1</string>
+		<string>3.3.7beta3</string>
+		<string>3.3.0beta15</string>
+		<string>3.3.3beta2</string>
+		<string>3.3.5beta1</string>
+		<string>3.3.0beta16</string>
+		<string>3.3.4beta1</string>
+		<string>3.3.2beta2</string>
+		<string>3.3.7beta4</string>
+		<string>3.3.8beta1</string>
+	</array>
+	<key>NoSyncFrame_SessionsPreferences</key>
+	<dict>
+		<key>screenFrame</key>
+		<string>{{0, 0}, {1920, 1080}}</string>
+		<key>topLeft</key>
+		<string>{657, 922}</string>
+	</dict>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
@@ -1754,7 +1781,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>1D378766-5CCD-43AE-B659-A02155CC64CE</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>14</integer>
+	<integer>62</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2284,6 +2311,22 @@
 			</dict>
 			<dict>
 				<key>isTerminal</key>
+				<false/>
+				<key>name</key>
+				<string>title</string>
+				<key>nonterminalContext</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>title</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
 				<string>tmuxWindowTitle</string>
@@ -2481,19 +2524,6 @@
 	</dict>
 	<key>NoSyncSaveDocumentAsPathSet_saveDocumentAs:</key>
 	<true/>
-	<key>NoSyncSearchHistory</key>
-	<array>
-		<string>=build</string>
-		<string>curl </string>
-		<string>crul </string>
-		<string>history</string>
-		<string>as ro</string>
-		<string>as o</string>
-		<string>yum install</string>
-		<string>yum remove</string>
-		<string>mk-build</string>
-		<string>.dpkg</string>
-	</array>
 	<key>NoSyncSilenceAnnoyingBellAutomatically</key>
 	<true/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
@@ -2554,15 +2584,15 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-05-15T10:38:34Z</date>
+	<date>2019-12-03T17:54:06Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
-	<true/>
+	<false/>
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>ShowNewOutputIndicator</key>
 	<true/>
 	<key>SmartPlacement</key>
@@ -2580,7 +2610,7 @@
 	<key>TabViewType</key>
 	<integer>0</integer>
 	<key>UKCrashReporterLastCrashReportDate</key>
-	<real>1557708032</real>
+	<real>1566082304</real>
 	<key>UseBorder</key>
 	<true/>
 	<key>VisualIndicatorForEsc</key>
@@ -2592,6 +2622,6 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.3.3beta2</string>
+	<string>3.3.8beta1</string>
 </dict>
 </plist>
