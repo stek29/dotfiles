@@ -10,6 +10,8 @@
 	<true/>
 	<key>AppleAntiAliasingThreshold</key>
 	<integer>1</integer>
+	<key>ApplePressAndHoldEnabled</key>
+	<false/>
 	<key>AppleScrollAnimationEnabled</key>
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
@@ -1113,6 +1115,8 @@
 				<key>Red Component</key>
 				<real>1</real>
 			</dict>
+			<key>Blink Allowed</key>
+			<false/>
 			<key>Blinking Cursor</key>
 			<false/>
 			<key>Blur</key>
@@ -1179,6 +1183,8 @@
 			<false/>
 			<key>Disable Window Resizing</key>
 			<true/>
+			<key>Draw Powerline Glyphs</key>
+			<false/>
 			<key>Flashing Bell</key>
 			<false/>
 			<key>Foreground Color</key>
@@ -1510,7 +1516,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FiraCode-Retina 19</string>
+			<string>JetBrainsMono-Regular 19</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -1714,6 +1720,8 @@
 			<array/>
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
+			<key>Thin Strokes</key>
+			<integer>4</integer>
 			<key>Title Components</key>
 			<integer>1</integer>
 			<key>Transparency</key>
@@ -1731,7 +1739,7 @@
 			<key>Use Non-ASCII Font</key>
 			<false/>
 			<key>Vertical Spacing</key>
-			<real>1</real>
+			<real>1.1000000000000001</real>
 			<key>Visual Bell</key>
 			<true/>
 			<key>Window Type</key>
@@ -1740,25 +1748,9 @@
 			<string>/Users/stek</string>
 		</dict>
 	</array>
-	<key>NoSyncAllAppVersions</key>
+	<key>NoSyncBFPRecents</key>
 	<array>
-		<string>3.3.5beta2</string>
-		<string>3.3.0beta11</string>
-		<string>3.3.0beta9</string>
-		<string>3.3.2beta1</string>
-		<string>3.3.0beta12</string>
-		<string>3.3.0beta13</string>
-		<string>3.3.7beta1</string>
-		<string>3.3.1beta1</string>
-		<string>3.3.7beta3</string>
-		<string>3.3.0beta15</string>
-		<string>3.3.3beta2</string>
-		<string>3.3.5beta1</string>
-		<string>3.3.0beta16</string>
-		<string>3.3.4beta1</string>
-		<string>3.3.2beta2</string>
-		<string>3.3.7beta4</string>
-		<string>3.3.8beta1</string>
+		<string>JetBrains Mono</string>
 	</array>
 	<key>NoSyncFrame_SessionsPreferences</key>
 	<dict>
@@ -2135,6 +2127,14 @@
 				<true/>
 				<key>name</key>
 				<string>style</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentTab.currentSession.jobPid</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -2587,12 +2587,14 @@
 	<date>2019-12-03T17:54:06Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
+	<key>SUUpdateGroupIdentifier</key>
+	<integer>3158044539</integer>
 	<key>SUUpdateRelaunchingMarker</key>
-	<false/>
+	<true/>
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<false/>
+	<true/>
 	<key>ShowNewOutputIndicator</key>
 	<true/>
 	<key>SmartPlacement</key>
@@ -2622,6 +2624,6 @@
 	<key>findMode_iTerm</key>
 	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.3.8beta1</string>
+	<string>3.3.10beta1</string>
 </dict>
 </plist>
