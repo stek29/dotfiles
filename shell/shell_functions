@@ -154,3 +154,9 @@ function nullhost() {
 function nullshort() {
   curl -sS -F"shorten=$1" 'https://0x0.st'
 }
+
+function vmbymac() {
+  # https://github.com/vmware/govmomi/issues/1201
+  mac="$(tr '[:upper:]' '[:lower:]' <<<"$1")"
+  govc object.collect -json -type m / config.hardware.device | jq -r '. | select(.ChangeSet[].Val.VirtualDevice[].MacAddress == "'"$mac"'") | [.Obj.Type, .Obj.Value] | join(":")' | xargs govc ls -L
+}
