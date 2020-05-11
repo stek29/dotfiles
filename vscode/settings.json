@@ -1,9 +1,11 @@
 {
-    "workbench.colorTheme": "Material Monokai High Contrast",
+    "workbench.preferredLightColorTheme": "Default Light+",
+    "workbench.preferredDarkColorTheme": "Material Monokai High Contrast",
+    "window.autoDetectColorScheme": true,
     "workbench.settings.editor": "json",
     "window.zoomLevel": 0,
     "editor.fontSize": 18,
-    "editor.fontFamily": "'Fira Code', Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontLigatures": true,
     "editor.rulers": [
         72,
@@ -28,23 +30,12 @@
     },
     // C++
     "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}",
-    // Go
-    "go.inferGopath": true,
     "go.useLanguageServer": true,
     // JS
     "eslint.validate": [
-        {
-            "language": "vue",
-            "autoFix": true
-        },
-        {
-            "language": "html",
-            "autoFix": true
-        },
-        {
-            "language": "javascript",
-            "autoFix": true
-        }
+        "vue",
+        "html",
+        "javascript"
     ],
     "eslint.autoFixOnSave": true,
     "peacock.favoriteColors": [
