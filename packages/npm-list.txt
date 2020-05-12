@@ -1,9 +1,6 @@
 diff-so-fancy
 eslint
 gitignore-to-dockerignore
-mdpdf
-messer
+hbs-cli
 npm
-resume-cli
 trash-cli
-vue-cli
