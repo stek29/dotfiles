@@ -1,6 +1,4 @@
 diff-so-fancy
-eslint
 gitignore-to-dockerignore
-hbs-cli
 npm
 trash-cli
