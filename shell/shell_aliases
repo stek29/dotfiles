@@ -29,7 +29,7 @@ alias cask='brew cask' # i <3 u cask
 # Always use color output for `ls`
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
-  colorflag="--color"
+  colorflag="--color=auto"
 else # OS X `ls`
   colorflag="-G"
 fi
@@ -47,9 +47,6 @@ alias la="ls -la ${colorflag}"
 
 # List only directories
 alias lsd='gls -l | grep "^d"'
-
-# `cat` with beautiful colors. requires Pygments installed.
-alias pygcat='pygmentize -O style=monokai -f console256 -g'
 
 # IP addresses
 alias myip="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
@@ -85,9 +82,6 @@ alias gist-file="gist --private --copy"  # gist-file filename.ext -- create priv
 # Networking. IP address, dig, DNS
 alias digg="dig +nocmd any +multiline +noall +answer"
 
-# Download file and save it with filename of remote file
-alias get="curl -O -L"
-
 # Recursively delete `.DS_Store` files
 alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 
@@ -98,9 +92,4 @@ alias hidedotfiles="defaults write com.apple.finder AppleShowAllFiles -bool fals
 # Show/hide all desktop icons (useful when presenting)
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-
-# HTTP Requests. One of @janmoesen’s ProTip™s
-#for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-#  alias "$method"="lwp-request -m '$method'"
-#done
 
