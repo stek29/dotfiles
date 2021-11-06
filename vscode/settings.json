@@ -1,7 +1,9 @@
 {
-    "workbench.colorTheme": "Community Material Theme Palenight High Contrast",
+    "workbench.preferredLightColorTheme": "Quiet Light",
+    "workbench.preferredDarkColorTheme": "Community Material Theme Ocean High Contrast",
+    "workbench.colorTheme": "Quiet Light",
+    "window.autoDetectColorScheme": true,
     "workbench.settings.editor": "json",
-    "window.zoomLevel": 0,
     "editor.fontSize": 18,
     "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontLigatures": true,
@@ -26,8 +28,6 @@
             "/^import\\s+\\([^]*?\\)$/gm"
         ]
     },
-    // C++
-    "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0}",
     "go.useLanguageServer": true,
     // JS
     "eslint.validate": [
@@ -39,5 +39,14 @@
     "[dockerfile]": {
         "editor.defaultFormatter": "ms-azuretools.vscode-docker"
     },
-    "workbench.iconTheme": "eq-material-theme-icons-ocean"
+    "workbench.iconTheme": "eq-material-theme-icons-ocean",
+    "explorer.confirmDelete": false,
+    "go.toolsManagement.autoUpdate": true,
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    }
 }
