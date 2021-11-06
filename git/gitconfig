@@ -176,3 +176,5 @@
 
 [diff "x509"]
         textconv = openssl x509 -text -noout -in
+[pull]
+	ff = only
