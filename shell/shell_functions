@@ -162,7 +162,7 @@ function vmbymac() {
 }
 
 # thefuck with command not found handler
-if command -v thefuck; then
+if command -v thefuck>/dev/null; then
   eval $(thefuck --alias)
   command_not_found_handler() {
     TF_SHELL_ALIASES="$(alias)"

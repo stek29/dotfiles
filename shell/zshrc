@@ -32,6 +32,8 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=$HOME/dotfiles/zsh
+# https://github.com/ohmyzsh/ohmyzsh/issues/7632
+DISABLE_MAGIC_FUNCTIONS=true
 
 # -------------------------------------
 # OMZ Plugins
