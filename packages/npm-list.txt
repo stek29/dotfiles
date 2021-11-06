@@ -1,4 +1,6 @@
 diff-so-fancy
 gitignore-to-dockerignore
 npm
+svg-term-cli
+svgexport
 trash-cli
