@@ -1,6 +1,6 @@
 {
     "workbench.preferredLightColorTheme": "Quiet Light",
-    "workbench.preferredDarkColorTheme": "Community Material Theme Ocean High Contrast",
+    "workbench.preferredDarkColorTheme": "Community Material Theme High Contrast",
     "workbench.colorTheme": "Quiet Light",
     "window.autoDetectColorScheme": true,
     "workbench.settings.editor": "json",
@@ -48,5 +48,10 @@
     "notebook.cellToolbarLocation": {
         "default": "right",
         "jupyter-notebook": "left"
+    },
+    "redhat.telemetry.enabled": false,
+    "git.ignoreLegacyWarning": true,
+    "[haskell]": {
+        "editor.defaultFormatter": "haskell.haskell"
     }
 }
