@@ -1,7 +1,7 @@
 {
     "workbench.preferredLightColorTheme": "Quiet Light",
     "workbench.preferredDarkColorTheme": "Community Material Theme High Contrast",
-    "workbench.colorTheme": "Quiet Light",
+    "workbench.colorTheme": "Community Material Theme High Contrast",
     "window.autoDetectColorScheme": true,
     "workbench.settings.editor": "json",
     "editor.fontSize": 18,
@@ -53,5 +53,15 @@
     "git.ignoreLegacyWarning": true,
     "[haskell]": {
         "editor.defaultFormatter": "haskell.haskell"
+    },
+    "shellcheck.customArgs": [
+        "-x"
+    ],
+    "files.associations": {
+        "*.j2": "jinja"
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "vs-kubernetes": {
+        "vs-kubernetes.crd-code-completion": "enabled"
     }
 }
