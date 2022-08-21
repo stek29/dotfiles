@@ -9,54 +9,18 @@ alias sudo="sudo "
 # Shortcuts
 alias g="git"
 alias vim="nvim"
-#alias rm='print -P "%F{red}Fuck rm. Use del, or grm%f" >&2'
 alias o="open"
-
-# npm -g i trash-cli
-alias del="trash"
 
 # verbose
 alias mv='mv -v'
 #alias rm='rm -i -v'
 alias cp='cp -v'
 
-alias cask='brew cask' # i <3 u cask
-
-#
-# Time to upgrade `ls`
-#
-
-# Always use color output for `ls`
-# Detect which `ls` flavor is in use
-if ls --color > /dev/null 2>&1; then # GNU `ls`
-  colorflag="--color=auto"
-else # OS X `ls`
-  colorflag="-G"
-fi
-
-export CLICOLOR_FORCE=1
-
-# List all files colorized in long format
-alias l="ls -lF ${colorflag}"
-
-# ls options: A = include hidden (but not . or ..), F = put `/` after folders, h = byte unit suffixes
-alias ls='ls -F ${colorflag} --group-directories-first'
-
-# List all files colorized in long format, including dot files
-alias la="ls -la ${colorflag}"
-
-# List only directories
-alias lsd='gls -l | grep "^d"'
-
-# IP addresses
-alias myip="ifconfig | grep 'inet ' | grep -v 127.0.0.1 | awk '{print \$2}'"
-alias myip6="ifconfig | grep 'inet6 ' | awk '{print \$2}'"
-
 # Git aliases
 # More Git tips http://firstaidgit.io/
 alias gss="git status -sb"
-alias gp="git push origin HEAD"
-alias gpt="git push origin HEAD && git push --tags"
+alias gp='git push'
+alias gpt='git push --tags'
 alias gl='git hist'
 alias glog='git log'
 alias gs='git status'
@@ -64,26 +28,11 @@ alias gd='git diff'
 alias gm='git commit -m'
 alias gb='git branch'
 alias gc='git checkout'
-alias gpu='git pull origin HEAD --prune'
-alias gf='git reflog' # allows you to see every step you have made with git allowing you to retract and reinstate your steps
 alias gap='git add -p' # step through each change, or hunk
 alias gcln='git clean -xfd' # remove untracked files
 
-# Undo a `git push`
-alias undopush="git push -f origin HEAD^:master"
-
 # `cd` to Git repo root
 alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
-
-# Gist
-alias gist-paste="gist --private --copy --paste --filename"  # gist-paste filename.ext -- create private Gist from the clipboard contents
-alias gist-file="gist --private --copy"  # gist-file filename.ext -- create private Gist from a file
-
-# Networking. IP address, dig, DNS
-alias digg="dig +nocmd any +multiline +noall +answer"
-
-# Recursively delete `.DS_Store` files
-alias cleanup_dsstore="find . -name '*.DS_Store' -type f -ls -delete"
 
 # Show/hide hidden files in Finder
 alias showdotfiles="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
