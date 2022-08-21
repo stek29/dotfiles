@@ -156,6 +156,7 @@
         # annotated tags when pushing branches out
         followTags = true
         default = current
+        autoSetupRemote = true
 
 # Use separate file for username / github token / etc
 [include]
