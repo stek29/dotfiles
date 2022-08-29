@@ -1,8 +1,9 @@
 {
     "workbench.preferredLightColorTheme": "Quiet Light",
-    "workbench.preferredDarkColorTheme": "Community Material Theme High Contrast",
-    "workbench.colorTheme": "Community Material Theme High Contrast",
+    "workbench.preferredDarkColorTheme": "Material Theme Darker High Contrast",
+    "workbench.colorTheme": "Quiet Light",
     "window.autoDetectColorScheme": true,
+    "files.insertFinalNewline": true,
     "workbench.settings.editor": "json",
     "editor.fontSize": 18,
     "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Menlo, Monaco, 'Courier New', monospace",
