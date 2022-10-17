@@ -1,15 +1,37 @@
-# Defaults
-[ -n "$SHELL" ] && export SHELL="$(command -v zsh)"
+if [[ -z "$BROWSER" && "$OSTYPE" == darwin* ]]; then
+  export BROWSER='open'
+fi
 
-# Pagers and Editors == n?vim
-export MANPAGER="$(command -v nvim) -c MANPAGERIFY -"
-export EDITOR="vim"
-command -v nvim >/dev/null && export EDITOR="nvim"
-export VISUAL="$EDITOR"
+if [[ -z "$EDITOR" ]]; then
+  export EDITOR='nvim'
+fi
+if [[ -z "$VISUAL" ]]; then
+  export VISUAL='nvim'
+fi
+if [[ -z "$PAGER" ]]; then
+  export PAGER='less -X'
+fi
 
 # Prefer US English and use UTF-8
-export LC_ALL="en_US.UTF-8"
-export LANG="en_US"
+if [[ -z "$LANG" ]]; then
+  export LANG='en_US.UTF-8'
+fi
+if [[ -z "$LC_ALL" ]]; then
+  export LC_ALL="en_US.UTF-8"
+fi
+
+# Ensure path arrays do not contain duplicates.
+typeset -gU cdpath fpath mailpath path
+
+# Set the list of directories that Zsh searches for programs.
+path=(
+  $HOME/{,s}bin(N)
+  /opt/{homebrew,local}/{,s}bin(N)
+  /usr/local/{,s}bin(N)
+  $path
+)
+
+# export MANPAGER="$(command -v nvim) -c MANPAGERIFY -"
 
 # Make less the default pager, add some options
 less_options=(
@@ -36,8 +58,3 @@ less_options=(
   --dumb
 );
 export LESS="${less_options[*]}"
-export PAGER='less -X'
-
-# ~/bin
-export PATH="$HOME/bin:$PATH"
-

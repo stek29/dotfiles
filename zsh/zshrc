@@ -1,0 +1,49 @@
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+alias sudo="sudo "
+
+# Shortcuts
+alias ls="exa"
+alias vim="nvim"
+
+# Git aliases
+alias g='git'
+alias ga='git add'
+alias gap='git add -p'
+alias gb='git branch'
+alias gc='git checkout'
+alias gd='git diff'
+alias gl='git hist'
+alias gm='git commit -m'
+alias gp='git push'
+alias gs='git status'
+alias gss='git status -sb'
+
+# `cd` to Git repo root
+alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
+
+# fancy diff
+alias fdiff="git diff --color --no-index "
+
+function mdcd() {
+  mkdir -p "$@" && cd "$@"
+}
+
+[ -f ~/.zsh.local ] && source ~/.zsh.local || true
+
+
+# Disable logout on ctrl d
+setopt IGNORE_EOF
+function _extended_logout() {
+  echo; echo -n 'logout [y/N]: '
+  if read -q; then
+    exit
+  else
+    zle send-break
+  fi
+}
+zle -N extended-logout _extended_logout
+bindkey '^d' extended-logout
