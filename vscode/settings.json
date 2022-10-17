@@ -5,7 +5,7 @@
     "window.autoDetectColorScheme": true,
     "files.insertFinalNewline": true,
     "workbench.settings.editor": "json",
-    "editor.fontSize": 18,
+    "editor.fontSize": 14,
     "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontLigatures": true,
     "editor.rulers": [
@@ -40,7 +40,6 @@
     "[dockerfile]": {
         "editor.defaultFormatter": "ms-azuretools.vscode-docker"
     },
-    "workbench.iconTheme": "eq-material-theme-icons-ocean",
     "explorer.confirmDelete": false,
     "go.toolsManagement.autoUpdate": true,
     "workbench.editorAssociations": {
@@ -52,9 +51,6 @@
     },
     "redhat.telemetry.enabled": false,
     "git.ignoreLegacyWarning": true,
-    "[haskell]": {
-        "editor.defaultFormatter": "haskell.haskell"
-    },
     "shellcheck.customArgs": [
         "-x"
     ],
