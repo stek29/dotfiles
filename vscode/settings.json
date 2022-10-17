@@ -30,13 +30,6 @@
         ]
     },
     "go.useLanguageServer": true,
-    // JS
-    "eslint.validate": [
-        "vue",
-        "html",
-        "javascript"
-    ],
-    "liveServer.settings.donotShowInfoMsg": true,
     "[dockerfile]": {
         "editor.defaultFormatter": "ms-azuretools.vscode-docker"
     },
