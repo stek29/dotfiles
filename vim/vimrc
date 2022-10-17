@@ -1,49 +1,25 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
-if has('nvim')
-"	set termguicolors
-endif
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin()
 
 if !has('nvim')
-	Plugin 'tpope/vim-sensible'
+	Plug 'tpope/vim-sensible'
 endif
 
-Plugin 'tpope/vim-sleuth'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'bling/vim-airline'
-Plugin 'lambdalisue/vim-manpager'
-Plugin 'fidian/hexmode'
-Plugin 'vimwiki/vimwiki'
+Plug 'tpope/vim-sleuth'
+Plug 'vim-airline/vim-airline'
+Plug 'lambdalisue/vim-manpager'
+Plug 'fidian/hexmode'
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()            " required
 
-" http://stackoverflow.com/a/17362994/5279817
-" size of a hard tabstop
-set tabstop=2
-" always uses spaces instead of tab characters
-set expandtab
-" size of an "indent"
-set shiftwidth=2
-
-" based on https://github.com/derElektrobesen/dotfiles/blob/master/.vimrc
 set list
 set listchars=tab:>-,trail:-
 
-set number
-" set relativenumber
+" set number
 
-" Break on words, not letters (when displaying)
-" set linebreak
 " as much as possible of the last line in a window will be displayed (not @)
 set display=lastline
 
@@ -81,9 +57,5 @@ endfunction
 command! -nargs=0 MANPAGERIFY call s:MANPAGERIFY()
 
 map <F2> :setlocal spell! spelllang=en_us,ru_ru<CR>
-
-let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.mkdn'}]
-
-let g:ruby_default_path = ['/usr/local/opt/ruby/bin/ruby']
 
 set background=light
