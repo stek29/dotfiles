@@ -175,3 +175,5 @@
         textconv = openssl x509 -text -noout -in
 [pull]
 	ff = only
+[advice]
+	detachedHead = false
