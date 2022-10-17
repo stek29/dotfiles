@@ -102,23 +102,19 @@ if ! ask_for_confirmation "Warning: this will overwrite your current dotfiles. C
   exit 1
 fi
 
-BACKUP_DIR=~/dotfiles_old             # old dotfiles backup directory
+BACKUP_DIR=~/dotfiles_old
 
 # Create dotfiles_old in homedir
 print_info "Creating $BACKUP_DIR for backup of existing dotfiles in ~"
 mkdir -p "$BACKUP_DIR"
 
 
-# Fetch submodules
-print_info "Fetching submodules"
-execute "git submodule update --quiet --init --recursive"
-
-# Oh My Zsh install
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  if ask_for_confirmation "Install oh-my-zsh?"; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh); exit"
+# prezto install
+if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
+  if ask_for_confirmation "Install prezto?"; then
+    execute "git clone --recursive https://github.com/sorin-ionescu/prezto.git '${ZDOTDIR:-$HOME}/.zprezto'"
   else
-    print_error "Oh My Zsh is not installed!"
+    print_error "prezto is not installed!"
     exit 1
   fi
 fi
@@ -148,11 +144,12 @@ fi
 
 # Actual symlink stuff
 FILES_TO_SYMLINK=(
-  'shell/shell_aliases'
-  'shell/shell_config'
-  'shell/shell_exports'
-  'shell/shell_functions'
-  'shell/zshrc'
+  'zsh/zlogin'
+  'zsh/zpreztorc'
+  'zsh/zprofile'
+  'zsh/zshenv'
+  'zsh/zshrc'
+
   'shell/curlrc'
   'shell/inputrc'
 
@@ -166,33 +163,28 @@ FILES_TO_SYMLINK=(
 # directory specified in $files
 for i in ${FILES_TO_SYMLINK[@]}; do
   sourceFile="$PWD/$i"
-  targetFile="$HOME/.$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
+  targetFile="$HOME/.$(basename "$i")"
   mklink "$sourceFile" "$targetFile" "$BACKUP_DIR"
 done
 
 unset FILES_TO_SYMLINK
 
 # Vim
-mkdir -p $HOME/.vim
-mklink "$DOTFILES_DIR/vim/vimrc" "$HOME/.vim/vimrc"
+mkdir -p $HOME/.config/nvim
+mklink "$DOTFILES_DIR/vim/vimrc" "$HOME/.config/nvim/init.vim"
 
-HAVE_VUNDLE=1
-if test \! -d $HOME/.vim/bundle/Vundle.vim/.git; then
-  if ask_for_confirmation "Install Vundle? (vimrc might break without it)"; then
-    execute "git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim"
+HAVE_VIMPLUG=1
+if test \! -f "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim"; then
+  if ask_for_confirmation "Install vim-plug? (vimrc might break without it)"; then
+    execute "curl -fLo '${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim' --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
   else
-    HAVE_VUNDLE=0
+    HAVE_VIMPLUG=0
   fi
 fi
 
-mkdir -p $HOME/.config
-
-# nvim
-ln -fs $HOME/.vim $HOME/.config/nvim
-ln -fs vimrc $HOME/.vim/init.vim
-
-if [ $HAVE_VUNDLE = 1 ] && ask_for_confirmation "Update Vundle plugins?"; then
-  execute "vim +PluginUpdate +qall >/dev/null 2>&1"
+if [ $HAVE_VIMPLUG = 1 ] && ask_for_confirmation "Update vim-plug plugins?"; then
+  execute "nvim +PlugUpdate +qall >/dev/null 2>&1"
 fi
 
 # recursive mklink
@@ -207,25 +199,19 @@ recursive_link () {
     fi
   done
 }
-# Oh My Zsh Customs
-if [ -z "$ZSH_CUSTOM" ]; then
-  ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
-fi
-recursive_link "$DOTFILES_DIR/zsh-custom" "$ZSH_CUSTOM"
-
-# Oh My Zsh Theme
-if [ "$(uname)" = "Darwin" ]; then
-  mklink "$HOME/.oh-my-zsh/custom/powerlevel9k.theme" "$HOME/.oh-my-zsh/custom/zsh.theme"
-fi
 
 # VSCode
-if command -v code >/dev/null && [ "$(uname)" = "Darwin" ]; then
-  VSC_USER_DATA="$HOME/Library/Application Support/Code/User"
-
-  print_info "(macOS) VSCode found"
-
-  print_info "Linking user data"
-  recursive_link "$DOTFILES_DIR/vscode" "$VSC_USER_DATA" "$BACKUP_DIR/vscode"
+if [ "$(uname)" = "Darwin" ]; then
+  if command -v code >/dev/null; then
+    VSC_USER_DATA="$HOME/Library/Application Support/Code/User"
+    print_info "Linking VS Code user data"
+    recursive_link "$DOTFILES_DIR/vscode" "$VSC_USER_DATA" "$BACKUP_DIR/vscode"
+  fi
+  if command -v codium >/dev/null; then
+    VSC_USER_DATA="$HOME/Library/Application Support/VSCodium/User"
+    print_info "Linking VS Codium user data"
+    recursive_link "$DOTFILES_DIR/vscode" "$VSC_USER_DATA" "$BACKUP_DIR/vscodium"
+  fi
 fi
 
 # Reload zsh settings
