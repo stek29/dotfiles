@@ -2,25 +2,29 @@
 
 # brew, cask, mas
 brew bundle dump --force
-grep 'tap ' Brewfile|sort > Brewfile.new
-grep -v '^tap ' Brewfile|sort >>Brewfile.new
+grep 'tap ' Brewfile | sort >Brewfile.new
+grep -v '^tap ' Brewfile | sort >>Brewfile.new
 mv Brewfile.new Brewfile
 
 # pip
-pipdeptree 2>/dev/null |\
-  grep -E '^\w+' |\
-  grep -v wheel |\
-  sed 's/==.*$//' |\
+pipdeptree 2>/dev/null |
+  grep -E '^\w+' |
+  grep -v wheel |
+  sed 's/==.*$//' |
   sort \
-    > requirements3.txt
+    >requirements3.txt
 
 # npm
-npm -g ls --depth=0 --parseable |\
+npm -g ls --depth=0 --parseable |
   tail -n +2 | # skip first line which is path to node_modules
-  while read x; do
-    echo $(basename $x)
+  while read -r x; do
+    basename "$x"
   done \
-    > npm-list.txt
+    >npm-list.txt
 
 # vscode
-code --list-extensions > vscode-list.txt
+if command -v code >/dev/null; then
+  code --list-extensions >vscode-list.txt
+elif command -v codium >/dev/null; then
+  codium --list-extensions >vscode-list.txt
+fi
