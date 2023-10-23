@@ -4084,6 +4084,8 @@
 	<true/>
 	<key>SoundForEsc</key>
 	<false/>
+	<key>StartDebugLoggingAutomatically</key>
+	<false/>
 	<key>StatusBarPosition</key>
 	<integer>1</integer>
 	<key>StretchTabsToFillBar</key>
