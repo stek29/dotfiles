@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# brew, cask, mas
+# brew, cask, mas, vscode
 brew bundle dump --force
 grep 'tap ' Brewfile | sort >Brewfile.new
 grep -v '^tap ' Brewfile | sort >>Brewfile.new
@@ -21,10 +21,3 @@ npm -g ls --depth=0 --parseable |
     basename "$x"
   done \
     >npm-list.txt
-
-# vscode
-if command -v code >/dev/null; then
-  code --list-extensions >vscode-list.txt
-elif command -v codium >/dev/null; then
-  codium --list-extensions >vscode-list.txt
-fi

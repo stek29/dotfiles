@@ -127,18 +127,13 @@ if ask_for_confirmation "Install pkgs (brew/cask/mas, pip3, npm, vscode)?"; then
       print_error "No homebrew found, skipping"
     else
       execute "brew tap Homebrew/bundle"
-      execute "brew bundle --file=Brewfile" "Homebrew & Cask & Mac AppStore"
+      execute "brew bundle --file=Brewfile" "Homebrew & Cask & Mac AppStore & VSCode"
     fi
   fi
 
   execute "pip3 install -U -r requirements3.txt" "pip3"
   
   execute "<npm-list.txt xargs npm i -g" "npm"
-  
-  if command -v code >/dev/null; then
-    print_info "Installing VSCode extensions, this might take a while..."
-    execute "<vscode-list.txt xargs -n1 code --install-extension" "vscode"
-  fi
   popd
 fi
 
