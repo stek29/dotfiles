@@ -1,11 +1,8 @@
-const vkDomains = [
-  'devmail.ru',
-  'ipmi',
-  'mail.ru',
-  'mvk.com',
-  'odkl.ru',
-  'smailru.net',
-  'vk.team',
+const yaDomains = [
+  'ya.ru',
+  'yandex-team.ru',
+  'yandex.ru',
+  'yandex.zoom.us',
 ];
 
 const regexStrFrom = (strings) =>
@@ -16,8 +13,8 @@ const regexStrFrom = (strings) =>
     .sort((a, b) => b.length - a.length)
     .join("|");
 
-const vkDomainRegexp = new RegExp(
-  '^(.*\\.|)(' + regexStrFrom(vkDomains) + ')$'
+const yaDomainRegexp = new RegExp(
+  '^(.*\\.|)(' + regexStrFrom(yaDomains) + ')$'
 );
 
 module.exports = {
@@ -45,26 +42,12 @@ module.exports = {
         }
       },
     },
-    // Open VK Calls links in VK Calls app
-    {
-      match: ({ url }) => url.host === "vk.com" && url.pathname.startsWith('/call/join/'),
-      url({ url }) {
-        const callId = url.pathname.replace(/^\/call\/join\//, '');
-
-        return {
-          host: 'vk.com',
-          search: `callId=${encodeURIComponent(callId)}`,
-          pathname: '/join',
-          protocol: 'vkcalls',
-        }
-      },
-    },
   ],
   handlers: [
-    // Open VK domains in Firefox
+    // Open Work domains in Yandex
     {
-      match: ({ url }) => vkDomainRegexp.test(url.host),
-      browser: "Firefox",
+      match: ({ url }) => yaDomainRegexp.test(url.host),
+      browser: "Yandex",
     },
     // Open Zoom links in Zoom
     {
@@ -73,22 +56,10 @@ module.exports = {
       ],
       browser: "us.zoom.xos",
     },
-    // Open VK Calls apps in VK Calls
-    {
-      match: ({ url }) => url.protocol === 'vkcalls',
-      browser: 'VK Calls',
-    },
     // Open Spotify links in Spotify
     {
       match: finicky.matchDomains("open.spotify.com"),
       browser: "Spotify",
-    },
-    // Finally, open all http/https from VK Teams in Firefox
-    {
-      match: ({ url, opener }) => (
-        url.protocol === 'https' || url.protocol === 'http'
-      ) && opener.bundleId === "ru.mail.messenger-biz-avocado-desktop",
-      browser: "Firefox",
     },
   ]
 };
