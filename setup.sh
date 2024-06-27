@@ -132,8 +132,7 @@ if ask_for_confirmation "Install pkgs (brew/cask/mas, pip3, npm, vscode)?"; then
   fi
 
   execute "pip3 install -U -r requirements3.txt" "pip3"
-  
-  execute "<npm-list.txt xargs npm i -g" "npm"
+
   popd
 fi
 
