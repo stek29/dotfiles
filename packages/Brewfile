@@ -19,7 +19,7 @@ brew "cloc"
 brew "cmake"
 brew "coreutils"
 brew "docker-compose", link: false
-brew "exa"
+brew "eza"
 brew "ffmpeg"
 brew "findutils"
 brew "ghostscript"

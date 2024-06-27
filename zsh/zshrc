@@ -6,7 +6,7 @@ fi
 alias sudo="sudo "
 
 # Shortcuts
-alias ls="exa"
+alias ls="eza"
 alias vim="nvim"
 
 # Git aliases
