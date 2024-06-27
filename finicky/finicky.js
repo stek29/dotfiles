@@ -5,6 +5,8 @@ const yaDomains = [
   'yandex.zoom.us',
 ];
 
+const workBrowser = 'Yandex';
+
 const regexStrFrom = (strings) =>
   strings
     // Escape special characters
@@ -16,6 +18,38 @@ const regexStrFrom = (strings) =>
 const yaDomainRegexp = new RegExp(
   '^(.*\\.|)(' + regexStrFrom(yaDomains) + ')$'
 );
+
+let handlers = [
+  // Open Work domains in Yandex
+  {
+    match: ({ url }) => yaDomainRegexp.test(url.host),
+    browser: workBrowser,
+  },
+  // Open Zoom links in Zoom
+  {
+    match: [
+      finicky.matchDomains(/.*zoom.us/),
+    ],
+    browser: "us.zoom.xos",
+  },
+  // Open Spotify links in Spotify
+  {
+    match: finicky.matchDomains("open.spotify.com"),
+    browser: "Spotify",
+  },
+];
+
+const isWorkOS = finicky.getSystemInfo().name.split('.')[0].endsWith('-osx');
+if (isWorkOS) {
+  finicky.log('Work OS detected, opening links from TG in Work browser')
+  // Finally, open all http/https from Work Telegram in Yandex
+  handlers.push({
+    match: ({ url, opener }) => (
+      url.protocol === 'https' || url.protocol === 'http'
+    ) && opener.bundleId === "ru.keepcoder.Telegram",
+    browser: workBrowser,
+  });
+}
 
 module.exports = {
   defaultBrowser: "Safari",
@@ -43,23 +77,5 @@ module.exports = {
       },
     },
   ],
-  handlers: [
-    // Open Work domains in Yandex
-    {
-      match: ({ url }) => yaDomainRegexp.test(url.host),
-      browser: "Yandex",
-    },
-    // Open Zoom links in Zoom
-    {
-      match: [
-        finicky.matchDomains(/.*zoom.us/),
-      ],
-      browser: "us.zoom.xos",
-    },
-    // Open Spotify links in Spotify
-    {
-      match: finicky.matchDomains("open.spotify.com"),
-      browser: "Spotify",
-    },
-  ]
+  handlers,
 };
