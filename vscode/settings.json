@@ -8,19 +8,20 @@
     "editor.fontSize": 14,
     "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Menlo, Monaco, 'Courier New', monospace",
     "editor.fontLigatures": true,
+    "shellformat.path": "/opt/homebrew/bin/shfmt",
     "editor.rulers": [
         72,
         80,
         120
     ],
-    // Spelling
     "spellright.language": [
         "en",
         "ru"
     ],
     "spellright.documentTypes": [
         "markdown",
-        "latex"
+        "latex",
+        "plaintext"
     ],
     "spellright.recheckOnSave": true,
     "spellright.ignoreRegExpsByClass": {
