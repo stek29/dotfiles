@@ -11,7 +11,7 @@
 	<key>BootstrapDaemon</key>
 	<false/>
 	<key>CheckTestRelease</key>
-	<true/>
+	<false/>
 	<key>CopyLastNewline</key>
 	<false/>
 	<key>CopySelection</key>
