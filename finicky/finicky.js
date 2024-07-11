@@ -21,17 +21,15 @@ const yaDomainRegexp = new RegExp(
 );
 
 let handlers = [
+  // Open Zoom links in Zoom
+  {
+    match: ({ url }) => url.protocol === 'zoomus',
+    browser: "us.zoom.xos",
+  },
   // Open Work domains in Yandex
   {
     match: ({ url }) => yaDomainRegexp.test(url.host),
     browser: workBrowser,
-  },
-  // Open Zoom links in Zoom
-  {
-    match: [
-      finicky.matchDomains(/.*zoom.us/),
-    ],
-    browser: "us.zoom.xos",
   },
   // Open Spotify links in Spotify
   {
@@ -66,15 +64,15 @@ module.exports = {
         try {
           var pass = '&pwd=' + url.search.match(/pwd=(\w*)/)[1];
         } catch {
-          var pass = ""
+          var pass = "";
         }
         let conf = 'confno=' + url.pathname.match(/\/j\/(\d+)/)[1];
 
         return {
-          search: conf + pass,
+          search: 'action=join&' + conf + pass,
           pathname: '/join',
-          protocol: "zoommtg"
-        }
+          protocol: "zoomus",
+        };
       },
     },
   ],
