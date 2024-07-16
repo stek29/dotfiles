@@ -4,6 +4,8 @@ const yaDomains = [
   'yandex.ru',
   'yandex.zoom.us',
   'yandex.net',
+  'yandex.cloud',
+  'yandexcloud.net',
 ];
 
 const workBrowser = 'Yandex';
