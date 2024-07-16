@@ -1,3 +1,12 @@
+# add homebrew zsh site-functions to fpath -- required on apple silicon
+# macOS due to homebrew not being in /usr/local
+if (( $+commands[brew] )); then
+  brew_prefix=${HOMEBREW_PREFIX:-${HOMEBREW_REPOSITORY:-$commands[brew]:A:h:h}}
+  [[ $brew_prefix == '/usr/local/Homebrew' ]] && brew_prefix=$brew_prefix:h
+  fpath=($brew_prefix/share/zsh/site-functions(/N) $fpath)
+  unset brew_prefix
+fi
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
