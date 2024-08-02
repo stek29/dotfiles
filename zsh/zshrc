@@ -43,6 +43,31 @@ function mdcd() {
   mkdir -p "$@" && cd "$@"
 }
 
+__copy_function() {
+  test -n "$(declare -f "$1")" || return
+  eval "${_/$1/$2}"
+}
+
+__rename_function() {
+  copy_function "$@" || return
+  unset -f "$1"
+}
+
+# if there's ~/.venv – activate it and hide prompt for it
+# however, disable_prompt should be unset when running deactivate
+# so wrap original deactivate function
+if [ -f ~/.venv/bin/activate ]; then
+  export VIRTUAL_ENV_DISABLE_PROMPT=1
+  source ~/.venv/bin/activate
+
+  __copy_function deactivate __deactivate
+  deactivate() {
+    __deactivate
+    unset -f __deactivate
+    unset VIRTUAL_ENV_DISABLE_PROMPT
+  }
+fi
+
 [ -f ~/.zsh.local ] && source ~/.zsh.local || true
 
 
