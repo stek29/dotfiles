@@ -126,7 +126,6 @@
 
 [core]
         editor = nvim
-        abbrev = 12
         attributesfile = ~/.gitattributes
         excludesfile = ~/.gitignore
         autocrlf = input
