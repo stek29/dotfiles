@@ -28,11 +28,6 @@ let handlers = [
     match: ({ url }) => url.protocol === 'zoomus',
     browser: "us.zoom.xos",
   },
-  // Open Work domains in Yandex
-  {
-    match: ({ url }) => yaDomainRegexp.test(url.host),
-    browser: workBrowser,
-  },
   // Open Spotify links in Spotify
   {
     match: finicky.matchDomains("open.spotify.com"),
@@ -41,8 +36,16 @@ let handlers = [
 ];
 
 const isWorkOS = finicky.getSystemInfo().name.split('.')[0].endsWith('-osx');
+
 if (isWorkOS) {
-  finicky.log('Work OS detected, opening links from TG in Work browser')
+  finicky.log('Work OS detected');
+
+  // Open Work domains in Yandex
+  handlers.push({
+    match: ({ url }) => yaDomainRegexp.test(url.host),
+    browser: workBrowser,
+  });
+
   // Finally, open all http/https from Work Telegram in Yandex
   handlers.push({
     match: ({ url, opener }) => (
