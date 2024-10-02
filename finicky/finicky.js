@@ -8,7 +8,13 @@ const yaDomains = [
   'yandexcloud.net',
 ];
 
-const workBrowser = 'Yandex';
+const workBrowser = ({ urlString }) => ({
+  name: 'Yandex',
+  args: [
+    '--profile-directory=Default',
+    urlString,
+  ],
+});
 
 const regexStrFrom = (strings) =>
   strings
