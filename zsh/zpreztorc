@@ -1,6 +1,8 @@
 # Color output (auto set to 'no' on dumb terminals).
 zstyle ':prezto:*:*' color 'yes'
 
+zstyle ':prompt:pure:git:stash' show 'yes'
+
 # Set the Zsh modules to load (man zshmodules).
 # zstyle ':prezto:load' zmodule 'attr' 'stat'
 
