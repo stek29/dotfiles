@@ -122,7 +122,7 @@
 
 # Git mergetool
 [merge]
-        tool = opendiff
+	conflictStyle = zdiff3
 
 [core]
         editor = nvim
@@ -131,7 +131,7 @@
         autocrlf = input
         mergeoptions = --no-edit
         ignorecase = false
-        pager = diff-so-fancy | less --tabs=4 -RFX
+	pager = delta
 
 [diff "bin"]
         # Use `hexdump` to diff binary files
@@ -176,3 +176,7 @@
 	ff = only
 [advice]
 	detachedHead = false
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
