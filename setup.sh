@@ -201,11 +201,6 @@ if [ "$(uname)" = "Darwin" ]; then
     print_info "Linking VS Code user data"
     recursive_link "$DOTFILES_DIR/vscode" "$VSC_USER_DATA" "$BACKUP_DIR/vscode"
   fi
-  if command -v codium >/dev/null; then
-    VSC_USER_DATA="$HOME/Library/Application Support/VSCodium/User"
-    print_info "Linking VS Codium user data"
-    recursive_link "$DOTFILES_DIR/vscode" "$VSC_USER_DATA" "$BACKUP_DIR/vscodium"
-  fi
 fi
 
 # Reload zsh settings
