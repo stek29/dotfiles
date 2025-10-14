@@ -194,13 +194,16 @@ recursive_link () {
   done
 }
 
-# VSCode
 if [ "$(uname)" = "Darwin" ]; then
+  # VSCode
   if command -v code >/dev/null; then
     VSC_USER_DATA="$HOME/Library/Application Support/Code/User"
     print_info "Linking VS Code user data"
     recursive_link "$DOTFILES_DIR/vscode" "$VSC_USER_DATA" "$BACKUP_DIR/vscode"
   fi
+
+  # Finicky 4
+  mklink "$DOTFILES_DIR/finicky" "$HOME/.config/finicky"
 fi
 
 # Reload zsh settings
