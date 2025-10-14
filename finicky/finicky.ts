@@ -1,4 +1,3 @@
-// ~/.finicky.ts
 import type { FinickyConfig, BrowserResolver, BrowserHandler } from '/Applications/Finicky.app/Contents/Resources/finicky.d.ts';
 
 const yaDomains = [
@@ -12,6 +11,7 @@ const yaDomains = [
 ];
 
 const workBrowser: BrowserResolver = (url: URL) => ({
+  // TODO: replace with profile instead of args once https://github.com/johnste/finicky/pull/493 gets into release
   name: 'Yandex',
   args: [
     '--profile-directory=Default',
