@@ -62,8 +62,8 @@ if (isWorkOS) {
   // Finally, open all http/https from Work Telegram in Yandex
   handlers.push({
     match: (url: URL, { opener }) => (
-      url.protocol === 'https' || url.protocol === 'http'
-    ) && !!opener && opener.bundleId === 'ru.keepcoder.Telegram',
+      url.protocol === 'https:' || url.protocol === 'http:'
+    ) && opener?.bundleId === 'ru.keepcoder.Telegram',
     browser: workBrowser,
   });
 }
