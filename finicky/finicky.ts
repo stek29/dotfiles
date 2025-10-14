@@ -14,6 +14,10 @@ const workBrowser: BrowserResolver = (url: URL) => ({
   // TODO: replace with profile instead of args once https://github.com/johnste/finicky/pull/493 gets into release
   name: 'Yandex',
   args: [
+    // add -n flag for the open command, and others for the browser itself
+    // see https://github.com/johnste/finicky/blob/53414af0c1caba2a606e512848486366baa9c366/apps/finicky/src/browser/launcher.go#L73-L97
+    '-n',
+    '--args',
     '--profile-directory=Default',
     url.href,
   ],
