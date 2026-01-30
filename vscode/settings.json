@@ -54,5 +54,13 @@
     "python.analysis.typeCheckingMode": "standard",
     "workbench.editor.empty.hint": "hidden",
     "ansible.lightspeed.enabled": false,
-    "chat.disableAIFeatures": true
+    "chat.disableAIFeatures": true,
+    "vs-kubernetes": {
+        "vs-kubernetes.crd-code-completion": "enabled"
+    },
+    "editor.largeFileOptimizations": false,
+    "gremlins.showInProblemPane": true,
+    "[sql]": {
+        "editor.defaultFormatter": "mtxr.sqltools"
+    }
 }
