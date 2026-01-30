@@ -74,6 +74,6 @@ if [ -f ~/.venv/bin/activate ]; then
   }
 fi
 
-autoload -Uz _extended_logout_setup && _extended_logout_setup
+autoload -Uz __extended_logout_setup && __extended_logout_setup && unfunction __extended_logout_setup
 
 [ -f ~/.zsh.local ] && source ~/.zsh.local || true

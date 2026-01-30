@@ -1,7 +1,5 @@
-#!/usr/bin/env zsh
-
 setopt IGNORE_EOF
-function _extended_logout() {
+function __extended_logout() {
   echo; echo -n 'logout [y/N]: '
   if read -rq; then
     exit
@@ -9,5 +7,5 @@ function _extended_logout() {
     zle send-break
   fi
 }
-zle -N extended-logout _extended_logout
+zle -N extended-logout __extended_logout
 bindkey '^d' extended-logout
