@@ -76,4 +76,14 @@ fi
 
 autoload -Uz __extended_logout_setup && __extended_logout_setup && unfunction __extended_logout_setup
 
+# enable fzf shell integration but only if it exists
+if (( $+commands[fzf] )); then
+  source <(fzf --zsh)
+fi
+
+# Enable qx shell integration but only if it exists
+if (( $+commands[qx] )); then
+  source <(qx --shell-integration zsh)
+fi
+
 [ -f ~/.zsh.local ] && source ~/.zsh.local || true
