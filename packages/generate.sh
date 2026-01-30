@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
 # brew, cask, mas, vscode
-brew bundle dump --force
-grep 'tap ' Brewfile | sort >Brewfile.new
-grep -v '^tap ' Brewfile | sort >>Brewfile.new
-mv Brewfile.new Brewfile
+brew bundle dump --no-go --no-cargo --file=Brewfile.new
+grep 'tap ' Brewfile.new | sort >Brewfile
+grep -v '^tap ' Brewfile.new | sort >>Brewfile
+rm Brewfile.new
 
 # pip
 pipdeptree 2>/dev/null |
