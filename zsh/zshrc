@@ -3,9 +3,15 @@
 if (( $+commands[brew] )); then
   brew_prefix=${HOMEBREW_PREFIX:-${HOMEBREW_REPOSITORY:-$commands[brew]:A:h:h}}
   [[ $brew_prefix == '/usr/local/Homebrew' ]] && brew_prefix=$brew_prefix:h
-  fpath=($brew_prefix/share/zsh/site-functions(/N) $fpath)
+  fpath+=($brew_prefix/share/zsh/site-functions(/N))
   unset brew_prefix
 fi
+
+fpath=(
+  ~/.zfunc(/N)
+  $fpath
+  "${HOME}/dotfiles/zsh/zfunc"(/N)
+)
 
 [ -f ~/.zsh-init.local ] && source ~/.zsh-init.local || true
 
@@ -53,7 +59,7 @@ __rename_function() {
   unset -f "$1"
 }
 
-# if there's ~/.venv – activate it and hide prompt for it
+# if there's ~/.venv -- activate it and hide prompt for it
 # however, disable_prompt should be unset when running deactivate
 # so wrap original deactivate function
 if [ -f ~/.venv/bin/activate ]; then
@@ -68,18 +74,7 @@ if [ -f ~/.venv/bin/activate ]; then
   }
 fi
 
+
 [ -f ~/.zsh.local ] && source ~/.zsh.local || true
 
-
-# Disable logout on ctrl d
-setopt IGNORE_EOF
-function _extended_logout() {
-  echo; echo -n 'logout [y/N]: '
-  if read -q; then
-    exit
-  else
-    zle send-break
-  fi
-}
-zle -N extended-logout _extended_logout
-bindkey '^d' extended-logout
+autoload -Uz _extended_logout_setup && _extended_logout_setup
