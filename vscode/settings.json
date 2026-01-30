@@ -51,15 +51,8 @@
         "*.j2": "jinja"
     },
     "diffEditor.ignoreTrimWhitespace": false,
-    "vs-kubernetes": {
-        "vs-kubernetes.crd-code-completion": "enabled"
-    },
-    "roo-cline.allowedCommands": [
-        "npm test",
-        "npm install",
-        "tsc",
-        "git log",
-        "git diff",
-        "git show"
-    ]
+    "python.analysis.typeCheckingMode": "standard",
+    "workbench.editor.empty.hint": "hidden",
+    "ansible.lightspeed.enabled": false,
+    "chat.disableAIFeatures": true
 }
