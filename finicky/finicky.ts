@@ -23,6 +23,12 @@ const workBrowser: BrowserResolver = (url: URL) => ({
   ],
 });
 
+const workAppBundleIDs = [
+  'ru.keepcoder.Telegram',
+  'ru.yandex.yamb',
+  'ru.yandex.desktop.telemost',
+];
+
 const regexStrFrom = (strings: string[]) =>
   strings
     // Escape special characters
@@ -63,7 +69,7 @@ if (isWorkOS) {
   handlers.push({
     match: (url: URL, { opener }) => (
       url.protocol === 'https:' || url.protocol === 'http:'
-    ) && opener?.bundleId === 'ru.keepcoder.Telegram',
+    ) && workAppBundleIDs.includes(opener?.bundleId!),
     browser: workBrowser,
   });
 }
