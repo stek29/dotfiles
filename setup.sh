@@ -74,7 +74,7 @@ mklink () {
     if [ ! -z "$backupTo" ]; then
       mkdir -p "$backupToDir"
       execute "mv \"$targetFile\" \"$backupTo\"" "Backup'd $targetFile → $backupTo"
-      execute "ln -fs \"$targetFile\" \"$sourceFile\"" "$targetFile → $sourceFile"
+      execute "ln -fs \"$sourceFile\" \"$targetFile\"" "$targetFile → $sourceFile"
     elif ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"; then
       rm -r "$targetFile"
       execute "ln -fs \"$sourceFile\" \"$targetFile\"" "$targetFile → $sourceFile"
@@ -137,7 +137,11 @@ if ask_for_confirmation "Install pkgs (brew/cask/mas, pip3, npm, vscode)?"; then
 fi
 
 # Actual symlink stuff
+mkdir -p "$HOME/.npm-global"
+
 FILES_TO_SYMLINK=(
+  '.npmrc'
+
   'zsh/zlogin'
   'zsh/zpreztorc'
   'zsh/zprofile'
