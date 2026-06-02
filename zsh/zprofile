@@ -27,6 +27,7 @@ typeset -gU cdpath fpath mailpath path
 path=(
   $HOME/go/bin(/N)
   $HOME/.krew/bin(/N)
+  $HOME/.npm-global/bin(/N)
   $HOME/{,s}bin(N)
   /opt/{homebrew,local}/{,s}bin(N)
   /usr/local/{,s}bin(N)
