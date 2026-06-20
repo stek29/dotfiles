@@ -9,3 +9,11 @@
 if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
+
+typeset -gU fpath
+fpath=(
+  "${ZDOTDIR:-$HOME}"/.zprezto/{modules,contrib}/*/functions(/N)
+  "${HOME}/.zfunc"(/N)
+  "${HOME}/dotfiles/zsh/zfunc"(/N)
+  $fpath
+)

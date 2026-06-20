@@ -7,12 +7,6 @@ if (( $+commands[brew] )); then
   unset brew_prefix
 fi
 
-fpath=(
-  ~/.zfunc(/N)
-  $fpath
-  "${HOME}/dotfiles/zsh/zfunc"(/N)
-)
-
 [ -f ~/.zsh-init.local ] && source ~/.zsh-init.local || true
 
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
