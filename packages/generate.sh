@@ -3,7 +3,7 @@
 # brew, cask, mas, vscode
 brew bundle dump --no-go --no-cargo --file=Brewfile.new
 grep 'tap ' Brewfile.new | sort >Brewfile
-grep -v '^tap ' Brewfile.new | sort >>Brewfile
+grep -ve '^tap ' -ve '^#' Brewfile.new | sort >>Brewfile
 rm Brewfile.new
 
 # pip

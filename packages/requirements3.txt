@@ -1,11 +1,11 @@
 argcomplete
 cryptography
-fqdn
-gpg
-isoduration
-jsonpointer
+nest-asyncio
 notebook
+overrides
+pip
 pipdeptree
-uri-template
-webcolors
+ruamel.yaml
+sniffio
+types-python-dateutil
 yandex-yt-yson-bindings
