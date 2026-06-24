@@ -210,6 +210,9 @@ if [ "$(uname)" = "Darwin" ]; then
   mklink "$DOTFILES_DIR/finicky" "$HOME/.config/finicky"
 fi
 
+# Ghostty
+mklink "$DOTFILES_DIR/ghostty" "$HOME/.config/ghostty"
+
 # Reload zsh settings
 source ~/.zshrc
 
