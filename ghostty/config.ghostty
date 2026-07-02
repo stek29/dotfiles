@@ -11,5 +11,8 @@ tab-inherit-working-directory = false
 cursor-style-blink = false
 macos-titlebar-style = tabs
 macos-titlebar-proxy-icon = hidden
+unfocused-split-opacity = 0.8
+
 keybind = super+arrow_left=previous_tab
 keybind = super+arrow_right=next_tab
+keybind = alt+m=toggle_mouse_reporting
