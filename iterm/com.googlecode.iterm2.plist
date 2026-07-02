@@ -2,10 +2,32 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AIFeatureFunctionCalling</key>
+	<true/>
+	<key>AIFeatureHostedCodeInterpeter</key>
+	<true/>
+	<key>AIFeatureHostedFileSearch</key>
+	<true/>
+	<key>AIFeatureHostedWebSearch</key>
+	<true/>
+	<key>AIFeatureStreamingResponses</key>
+	<true/>
+	<key>AITermAPI</key>
+	<integer>2</integer>
+	<key>AIVectorStore</key>
+	<integer>0</integer>
 	<key>AdjustWindowForFontSizeChange</key>
 	<true/>
+	<key>AiMaxTokens</key>
+	<integer>400000</integer>
+	<key>AiModel</key>
+	<string>gpt-5.2</string>
+	<key>AiResponseMaxTokens</key>
+	<integer>128000</integer>
+	<key>AitermURL</key>
+	<string>https://api.openai.com/v1/responses</string>
 	<key>AllowClipboardAccess</key>
-	<false/>
+	<true/>
 	<key>AlternateMouseScroll</key>
 	<true/>
 	<key>BootstrapDaemon</key>
@@ -1790,7 +1812,7 @@
 			<key>Disable Printing</key>
 			<false/>
 			<key>Disable Window Resizing</key>
-			<true/>
+			<false/>
 			<key>Draw Powerline Glyphs</key>
 			<false/>
 			<key>Flashing Bell</key>
@@ -3519,7 +3541,7 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>ShowNewOutputIndicator</key>
 	<true/>
 	<key>SmartPlacement</key>
