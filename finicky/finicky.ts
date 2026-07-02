@@ -74,8 +74,10 @@ if (isWorkOS) {
   });
 }
 
+const defaultBrowser = isWorkOS ? 'Safari' : 'Firefox';
+
 export default {
-  defaultBrowser: 'Safari',
+  defaultBrowser,
   options: {
     keepRunning: true,
     hideIcon: false,
