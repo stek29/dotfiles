@@ -52,6 +52,11 @@ let handlers: BrowserHandler[] = [
     match: finicky.matchHostnames('open.spotify.com'),
     browser: 'Spotify',
   },
+  // Open Telemost links in Telemost
+  {
+    match: (url) => url.host === 'telemost.360.yandex.ru' && /\/j\/\d+/.test(url.pathname),
+    browser: 'ru.yandex.desktop.telemost',
+  },
 ];
 
 const isWorkOS = finicky.getSystemInfo().name.split('.')[0].endsWith('-osx');
