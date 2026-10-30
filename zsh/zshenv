@@ -17,3 +17,7 @@ fpath=(
   "${HOME}/dotfiles/zsh/zfunc"(/N)
   $fpath
 )
+
+if [[ -r "${ZDOTDIR:-$HOME}/.zshenv.local" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zshenv.local"
+fi
